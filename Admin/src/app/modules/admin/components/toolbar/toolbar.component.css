@@ -1,0 +1,50 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-container {
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.profile_name {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px;
+    color: black;
+}
+
+.profile {
+    height: 6vh;
+    width: 3vw;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: left;
+}
+
+mat-drawer-content {
+    padding: 12px;
+    width: 100vw;
+}
+
+
+
+.toolbar_btn {
+    border: 1px solid white !important;
+}
+
+.mail {
+    margin-right: 1%;
+    cursor: pointer;
+}
+
+.toolbar {
+    color: rgb(9, 8, 8);
+    background-color: #30d2a8;
+    height: 10vh;
+}

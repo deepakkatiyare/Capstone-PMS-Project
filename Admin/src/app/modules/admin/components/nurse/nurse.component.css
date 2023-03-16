@@ -1,0 +1,42 @@
+table {
+    width: fit-content;
+}
+
+.table_div {
+    margin: 0 50px 10px 50px;
+}
+
+.patient_info {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.search {
+    font-size: 15px;
+    float: right;
+    margin-right: 5%;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 10vw;
+    height: 4vh;
+    text-align: center;
+}
+
+.mat-mdc-form-field {
+    font-size: 15px;
+    float: right;
+    margin-right: 50px;
+
+}
+
+.btnn {
+    margin-right: 10px;
+}
+
+.tablecss {
+    /* background-image: url('https://images.pexels.com/photos/4047186/pexels-photo-4047186.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
+    text-align: center;
+    font-size: 12px;
+    background-color: rgba(168, 242, 218, 0.489);
+}

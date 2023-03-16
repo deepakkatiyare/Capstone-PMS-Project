@@ -1,0 +1,43 @@
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field+.mat-mdc-form-field {
+    margin-left: 8px;
+}
+
+.m .example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+.list_container {
+    margin-left: 50px;
+}
+
+mat-panel-title {
+    color: #30d2a8;
+}
+
+.drawer {
+    width: 25vw;
+    justify-content: left;
+}
+
+.dashboard {
+    width: 100%;
+    justify-content: left;
+    height: 48px;
+    padding-left: 13%;
+    font-size: medium;
+    color: #30d2a8 !important;
+}
+
+.list li {
+    cursor: pointer;
+    margin-top: 15px;
+}

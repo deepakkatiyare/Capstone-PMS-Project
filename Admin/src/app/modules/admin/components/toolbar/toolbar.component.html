@@ -1,0 +1,36 @@
+<!-- <div class="toolbar"> -->
+<mat-toolbar class="toolbar">
+
+    <button mat-icon-button (click)="drawer.toggle()" class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span><b> Practice Management System </b></span>
+    <span class="example-spacer"></span>
+    <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+            <mat-icon>favorite</mat-icon>
+        </button> -->
+    <mat-icon class="mail"><span class="material-icons-outlined">
+            mail_outline
+        </span></mat-icon>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOlTR9zqmqtrBCm8oR79gP6Z0UFoxLdmO13sDH3Merqg&s"
+        class="profile" />
+    <div></div>
+    <div *ngIf="auth.isAuthenticated$ |async">
+        <button mat-stroked-button class="toolbar_btn" (click)="auth.logout()">
+            Sign-out
+        </button>
+    </div>
+</mat-toolbar>
+<!-- </div> -->
+
+<div>
+    <mat-drawer-container class="example-container flex-container" hasBackdrop="false">
+        <mat-drawer #drawer mode="side" class="drawer" opened="true">
+            <app-side-nav-items></app-side-nav-items>
+        </mat-drawer>
+        <mat-drawer-content>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

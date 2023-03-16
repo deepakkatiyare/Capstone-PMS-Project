@@ -1,0 +1,72 @@
+<mat-accordion class="example-headers-align" multi class="example-spacer" ma>
+    <!-- <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon style="margin:5px;">dashboard</mat-icon>
+                Dashboard
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="list_container">
+            <ul class="list">
+                <li>Schedule Physician</li>
+                <li routerLink="/admin/patient">View Patient</li>
+            </ul>
+        </div>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider> -->
+    <div>
+        <button mat-flat-button class="dashboard" routerLink="/admin/dashboard">
+            <mat-icon style="margin:5px;">dashboard</mat-icon>Dashboard</button>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon style="margin:5px;">account_circle</mat-icon>
+                Admin
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="list_container">
+            <ul class="list">
+                <li>Add Admin</li>
+                <li routerLink="/admin/details">List Admin</li>
+            </ul>
+        </div>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon style="margin:5px;"><span class="material-icons-outlined">
+                        medication
+                    </span></mat-icon>
+                Physician
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="list_container">
+            <ul class="list">
+                <li> Add Physician</li>
+                <li routerLink="/admin/physician">List Physician</li>
+            </ul>
+        </div>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon style="margin:5px;">home</mat-icon>
+                Nurse
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="list_container">
+            <ul class="list">
+                <li>Add Nurse</li>
+                <li routerLink="/admin/nurse">List Nurse</li>
+            </ul>
+        </div>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+</mat-accordion>

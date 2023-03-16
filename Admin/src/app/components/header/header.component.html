@@ -1,0 +1,64 @@
+<!-- <app-toolbar></app-toolbar> -->
+<div>
+    <mat-toolbar style="background-color: #30d2a8;height:10vh;">
+        <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+        <span>My Application</span>
+        <span class="example-spacer"></span>
+        <div *ngIf="auth.isAuthenticated$ |async; else logout">
+            <button mat-stroked-button class="toolbar_btn" (click)="auth.logout()">
+                Sign-out
+            </button>
+        </div>
+        <ng-template #logout>
+            <button mat-stroked-button class="toolbar_btn" (click)="auth.loginWithRedirect()">
+                login
+            </button>
+        </ng-template>
+    </mat-toolbar>
+</div>
+<div>
+    <mat-tab-group color="Secondary">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon><span class="material-symbols-sharp">
+                        home
+                    </span></mat-icon>
+                <span>Home</span>
+            </ng-template>
+            Content 1
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon><span class="material-symbols-outlined">
+                        info
+                    </span></mat-icon>
+                <span>About</span>
+            </ng-template>
+            Content 2
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon><span class="material-symbols-sharp">
+                        stethoscope
+                    </span></mat-icon>
+                <span>Doctors</span>
+            </ng-template>
+            Content 3
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>thumb_up</mat-icon>
+                <span>Specialty</span>
+            </ng-template>
+            Content 4
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<button *ngIf="auth.isAuthenticated$ |async" mat-stroked-button routerLink="/admin">Admin Dashbord</button>
+<div *ngIf="auth.user$|async as user">
+    <h2>Welcome {{user.name}}</h2>
+    <p>{{user.email}}</p>
+    <p>{{user['role']}}</p>
+</div>

@@ -1,0 +1,35 @@
+table {
+    width: fit-content;
+}
+
+.search {
+    font-size: 15px;
+    float: right;
+    margin-right: 5%;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 10vw;
+    height: 4vh;
+    text-align: center;
+}
+
+.table_div {
+    margin: 0 50px 10px 50px;
+}
+
+.patient_info {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.mat-mdc-form-field {
+    font-size: 15px;
+    float: right;
+    margin-right: 50px;
+}
+
+.tablecss {
+    font-size: 12px;
+    background-color: rgba(170, 240, 218, 0.514);
+}
