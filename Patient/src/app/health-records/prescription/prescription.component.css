@@ -1,0 +1,32 @@
+.mat-column-demo-prid {
+  /* font-family: 'MyFont'; */
+    text-align: center;
+    /* border-right:1px solid currentColor; */
+  }
+
+  .mat-column-demo-medicine {
+    /* font-family: 'MyFont'; */
+    text-align: center;
+    /* border-right:1px solid currentColor; */
+  }
+  
+  .mat-column-demo-dosage {
+    /* font-family: 'MyFont'; */
+    text-align: center;
+    /* border-right:1px solid currentColor; */
+  }
+  
+  .mat-column-demo-notes {
+    /* font-family: 'MyFont'; */
+    text-align: center;
+    /* border-right:1px solid currentColor; */
+  }
+.close{
+    text-align: center;
+    margin-top: 2%;
+  }
+  .prescription{
+   
+    margin-left:3% ;
+    margin-right:3%;
+  }

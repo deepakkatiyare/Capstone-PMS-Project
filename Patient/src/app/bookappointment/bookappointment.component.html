@@ -1,0 +1,37 @@
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="10px grid" style="
+      flex-flow: row wrap;
+      display: flex;
+      margin: 0px -150px -10px 0px;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      width:100%;
+      overflow-y: hidden;
+    ">
+    <div style="margin-right: 30px;margin-left: 30px;" fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="50%"
+      *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title style="font-size: large;font-family: 'Roboto',sans-serif;">Dr. Vamshi</mat-card-title>
+          <br>
+          <mat-card-subtitle style="font-size: medium;font-family: 'Roboto',sans-serif;">MBBS, MD(Pulmonary Medicine)
+            PULMONOLOGY | Consultant</mat-card-subtitle>
+        </mat-card-header>
+        <br>
+        <h3 style="font-size: medium;font-family: 'Roboto',sans-serif;margin: 0px 0px 0px 16px">Avalability:</h3>
+        <br>
+        <mat-card-footer style="text-align: right">
+          <mat-card-actions fxFlexAlign="end">
+            <button mat-button class="end" style="height: fit-content; width: fit-content" (click)="openDialog()">
+              <p class="text">Book Appointment
+              <p>
+            </button>
+          </mat-card-actions>
+        </mat-card-footer>
+      </mat-card>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>

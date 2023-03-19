@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'MyFont';
+  src: url('/assets/Roboto/Roboto-Light.ttf');
+}
+
+@font-face {
+  font-family: 'MyFont1';
+  src: url('/assets/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'MyFont2';
+  src: url('/assets/Roboto/Roboto-Bold.ttf');
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+}
