@@ -13,4 +13,5 @@ export class Patient {
     gender: string = "";
     password: string = "";
     address: string = "";
+
 }

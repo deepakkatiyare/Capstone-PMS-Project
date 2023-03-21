@@ -14,7 +14,7 @@ export class PatientRegisterService {
     this.registerUrl = 'http://localhost:8080/api/v1/patient/register';
   }
 
-  public findByPatientEmail(): Observable<Patient> {
+  public findByPatientEmailandPassword(): Observable<Patient> {
     return this.http.get<Patient>(this.registerUrl);
   }
 

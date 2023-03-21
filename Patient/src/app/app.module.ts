@@ -40,6 +40,7 @@ import { PatienthomeComponent } from './patienthome/patienthome.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { DialogAppointmentComponent } from './dialog-appointment/dialog-appointment.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { LoginComponent } from './login/login.component';
     PatienthomeComponent,
     ResetpasswordComponent,
     DialogAppointmentComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     ReactiveFormsModule,

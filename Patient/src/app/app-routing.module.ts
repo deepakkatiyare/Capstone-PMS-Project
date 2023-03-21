@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { PatientRegiComponent } from './patient-regi/patient-regi.component';
 import { BookappointmentComponent } from './bookappointment/bookappointment.component';
 import { PatienthomeComponent } from './patienthome/patienthome.component';
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: "login", component: LoginComponent
+  },
+  {
+    path:"profile",component:ProfileComponent
   }
 ];
 

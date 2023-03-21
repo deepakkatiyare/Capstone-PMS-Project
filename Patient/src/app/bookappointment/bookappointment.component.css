@@ -1,6 +1,13 @@
 .mat-elevation-z4 {
+  align-items: center;
   max-width: 400px;
+  max-height: 250px;
+  margin-right: 0%;
+  margin-left: 10%;
+  margin-top: 7%;
+  margin-bottom: 5%;
   text-size-adjust: initial;
+  border-radius: 5%;
 }
 
 .example-header-image {
@@ -21,11 +28,10 @@
   transition: 0.3s;
   background-color: #EAFDFC;
 }
+.availability{
+  font-size: medium;
+  font-family: 'Roboto',sans-serif;
 
-.cent {
-  padding-top: 10px;
-  text-align: center;
-  -ms-flex-align: end;
 }
 
 .end {
