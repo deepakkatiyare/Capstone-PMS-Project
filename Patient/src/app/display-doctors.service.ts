@@ -10,7 +10,7 @@ export class DisplayDoctorsService {
     private registerUrl: string;
 
   constructor(private http: HttpClient) {
-    this.registerUrl = 'http://localhost:8080/api/v1/patient/physician';
+    this.registerUrl = 'http://localhost:8080/patient/physician';
   }
 
   public findPhysician(): Observable<Physician[]> {

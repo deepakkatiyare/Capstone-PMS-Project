@@ -30,12 +30,12 @@ export class PatientRegiComponent {
     this.patient.firstName = value.firstName;
     this.patient.lastName = value.lastName;
     this.patient.email = value.email;
-    this.patient.contact = value.contact;
+    this.patient.contactNumber = value.contact;
     this.patient.dob = value.dob;
     this.patient.gender = value.gender;
     this.patient.password = value.password;
     this.patient.address = value.address;
-    this.patientRegister.save(this.patient).subscribe(result => {
+    this.patientRegister.registerPatient(this.patient).subscribe(result => {
       console.log(result);
       this.gotoUserList()
     });

@@ -11,14 +11,16 @@ export class PatientRegisterService {
   private registerUrl: string;
 
   constructor(private http: HttpClient) {
-    this.registerUrl = 'http://localhost:8080/api/v1/patient/register';
+    this.registerUrl = 'http://localhost:9004/api/v1/patient/register';
+
   }
 
-  public findByPatientEmailandPassword(): Observable<Patient> {
+  public loginPatient(): Observable<Patient> {
     return this.http.get<Patient>(this.registerUrl);
   }
 
-  public save(patient: Patient) {
+  public registerPatient(patient: Patient) {
+    console.log(patient);
     return this.http.post<Patient>(this.registerUrl, patient);
   }
 }

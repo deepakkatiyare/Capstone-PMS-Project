@@ -13,15 +13,16 @@
       <mat-card class="mat-elevation-z4">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title style="font-size: large;font-family: 'Roboto',sans-serif;">{{p.email}}</mat-card-title>
+          <mat-card-title style="font-size: large;font-family: 'Roboto',sans-serif;">{{p.physicianEmail}}</mat-card-title>
+          
           <br>
-          <mat-card-subtitle style="font-size: medium;font-family: 'Roboto',sans-serif;">MBBS, MD(Pulmonary Medicine)
-            PULMONOLOGY | Consultant</mat-card-subtitle> 
-        </mat-card-header>
-        <p class="availability"><b>Availability :</b> {{p.availability}}  {{p.date}}</p>
+          <!-- <mat-card-subtitle style="font-size: medium;font-family: 'Roboto',sans-serif;">MBBS, MD(Pulmonary Medicine)
+            PULMONOLOGY | Consultant</mat-card-subtitle> -->
+        </mat-card-header> 
+        <p class="availability"><b>Availability :</b> {{p.availability}} {{p.date}}</p>
         <mat-card-footer style="text-align: right">
           <mat-card-actions fxFlexAlign="end">
-            <button mat-button class="end" style="height: fit-content; width: fit-content" (click)="openDialog()">
+            <button mat-button class="end" style="height: fit-content; width: fit-content" (click)="openDialog(p.physicianEmail)">
               <p class="text">Book Appointment</p>
             </button>
           </mat-card-actions>

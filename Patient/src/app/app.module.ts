@@ -41,6 +41,8 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { DialogAppointmentComponent } from './dialog-appointment/dialog-appointment.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { CustomDatePipePipe } from './custom-date-pipe.pipe';
 
 
 @NgModule({
@@ -56,7 +58,8 @@ import { ProfileComponent } from './profile/profile.component';
     ResetpasswordComponent,
     DialogAppointmentComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    CustomDatePipePipe
   ],
   imports: [
     ReactiveFormsModule,
@@ -85,6 +88,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     MatSortModule,
     MatSnackBarModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

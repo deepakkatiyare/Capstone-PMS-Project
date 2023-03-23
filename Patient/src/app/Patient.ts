@@ -8,7 +8,7 @@ export class Patient {
     firstName: string = "";
     lastName: string = "";
     email: string = "";
-    contact: string = "";
+    contactNumber: string = "";
     dob: string = "";
     gender: string = "";
     password: string = "";

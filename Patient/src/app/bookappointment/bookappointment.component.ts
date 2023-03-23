@@ -3,6 +3,8 @@ import { DisplayDoctorsService } from './../display-doctors.service';
 import { DialogAppointmentComponent } from './../dialog-appointment/dialog-appointment.component';
 import { Component,OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -12,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BookappointmentComponent implements OnInit{
   physician: Physician[] = [];
+  dataEmail: string="";
   constructor(private dialog:MatDialog,private physicianService:DisplayDoctorsService){
 
   }
@@ -19,9 +22,11 @@ ngOnInit(){
   this.physicianService.findPhysician().subscribe(data =>{
     this.physician=data;
   });
-
+  
 }
-  openDialog(){
-    this.dialog.open(DialogAppointmentComponent);
+  openDialog(value:any){
+    console.log(value);
+    this.dialog.open(DialogAppointmentComponent,{data:{dataEmail:value}});
   }
+
 }

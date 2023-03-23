@@ -4,12 +4,12 @@
       <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Appointment Booking</h1>  
       <br>
       <br>
-      <form>  
+      <form #appointmentForm="ngForm" (ngSubmit)="onSubmit(appointmentForm.value)">  
         <div class="row">   
             <div class="col-6 col-sm-6 col-md-6 col-lg-6">
               <mat-form-field appearance="fill" class="example-full-width">
                <mat-label>Date Of Appointment</mat-label>
-              <input matInput [matDatepicker]="picker" required>
+              <input name="date" matInput [matDatepicker]="picker" ngModel required>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> 
               <mat-datepicker #picker> </mat-datepicker>  
               </mat-form-field>   
@@ -17,10 +17,12 @@
             <div class="col-6 col-sm-6 col-md-6 col-lg-6"> 
               <mat-form-field appearance="fill">
                 <mat-label>Reason</mat-label>
-                <textarea matInput required></textarea>
+                <textarea name="reason" matInput ngModel required></textarea>
               </mat-form-field>   
             </div>  
-            <button mat-raised-button color="primary" (click)="closeDialog()" >Submit</button>
+            <button type="submit" mat-raised-button color="primary" routerLinkActive="active">
+              submit
+            </button>
         </div> 
       
       </form>    
