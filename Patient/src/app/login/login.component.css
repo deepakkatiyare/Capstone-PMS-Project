@@ -1,0 +1,16 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+.b1{
+    right:15%;
+}
+.b2{
+    left:15%;
+}
+.login {
+    margin: auto;
+    width: 50%;
+    padding: 100px;
+    text-align: center;
+  }

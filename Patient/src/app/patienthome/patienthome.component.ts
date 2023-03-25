@@ -10,7 +10,7 @@ import { PatientRegisterService } from '../patient-register.service';
 export class PatienthomeComponent implements OnInit {
   constructor(public patientService: PatientRegisterService, public patient: Patient) { }
   ngOnInit(): void {
-    this.patientService.loginPatient().subscribe(data => { this.patient = data,this.patient=data });
+    
   }
 
 }

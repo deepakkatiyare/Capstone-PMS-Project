@@ -1,3 +1,7 @@
+  <!-- <mat-toolbar style="background-color: #099dc6">
+    <span>
+      <h1 style="text-align: center;color: white;"><b>Patient Management System</b></h1></span>
+  </mat-toolbar> -->
 <div class="registration">
   <div>
     <h1>Registration</h1>
@@ -62,9 +66,13 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput name="confirm" ngModel required />
+        <input matInput [type]="hide ? 'password' : 'text'" name="ConfirmPassword" ngModel required />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
       </mat-form-field>
+      <mat-error *ngIf="passwordError">Password doesn't match</mat-error>
     </div>
     <div>
       <mat-form-field appearance="outline" style="width:96%;">
@@ -78,5 +86,6 @@
     <button type="submit" mat-raised-button color="primary" routerLinkActive="active">
       Register
     </button>
+    <mat-error *ngIf="showError">Already Registered</mat-error>
   </form>
 </div>

@@ -1,18 +1,38 @@
-<h2>Login</h2>
-<form name="form" ng-submit="vm.login()" role="form">
-    <div>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" ng-model="vm.username" required />
-        <span ng-show="form.username.$dirty
-          && form.username.$error.required">Username is required</span>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" ng-model="vm.password" required />
-        <span ng-show="form.password.$dirty
-          && form.password.$error.required">Password is required</span>
-    </div>
-    <div class="form-actions">
-        <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" routerLink="/patienthome" routerLinkActive="true">Login</button>
-    </div>
-</form>
+<!-- <p>
+  <mat-toolbar style="background-color: #099dc6">
+    <span>
+      <h1 style="text-align: center;color: white;"><b>Patient Management System</b></h1></span>
+  </mat-toolbar>
+</p> -->
+
+<div class="login">
+  <h2>Login</h2>
+  <form #patientForm="ngForm" (ngSubmit)="onSubmit(patientForm.value)">
+      <div>
+        <mat-form-field appearance="outline" style="width:50%;">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" name="email" required ngModel />
+          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+          
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-form-field appearance="outline" style="width:50%;">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" name="password" ngModel required />
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <button class="b1" type="submit" mat-raised-button color="primary" routerLinkActive="active">
+        Login
+      </button>
+      <button class="b2" mat-raised-button color="primary" routerLink="/sidebar" routerLinkActive="active">
+        Register
+      </button>
+      <mat-error *ngIf="showError">Please Register First!!!</mat-error>
+      </form>
+</div>
