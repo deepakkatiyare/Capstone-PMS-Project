@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Patient } from '../Patient';
-import { PatientRegisterService } from '../patient-register.service';
+
+import { Component, OnInit ,Input} from '@angular/core';
+
 
 @Component({
   selector: 'app-patienthome',
@@ -8,9 +8,7 @@ import { PatientRegisterService } from '../patient-register.service';
   styleUrls: ['./patienthome.component.css']
 })
 export class PatienthomeComponent implements OnInit {
-  constructor(public patientService: PatientRegisterService, public patient: Patient) { }
-  ngOnInit(): void {
-    
+  constructor() { }
+  ngOnInit() {
   }
-
 }

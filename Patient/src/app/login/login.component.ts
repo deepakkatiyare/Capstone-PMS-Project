@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component ,EventEmitter, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppService } from '../AppService';
 import { Patient } from '../Patient';
 import { PatientRegisterService } from '../patient-register.service';
 import {LoginService} from '../login.service';
@@ -12,7 +11,7 @@ import {LoginService} from '../login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   formData!: FormGroup;
   showError:boolean=false;
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -33,7 +32,6 @@ export class LoginComponent {
   onSubmit(value: any): void {
     for(var p of this.patients){
       if(p.email==value.email && p.password==value.password){
-        this.loginservice.loginPatient(value.email,value.password);
         this.router.navigate(['/patient-home']);
         break;
       }
@@ -42,4 +40,5 @@ export class LoginComponent {
       }
     }
   }
+  
 }
