@@ -15,6 +15,8 @@ import { FormControl } from '@angular/forms';
 export class BookappointmentComponent implements OnInit{
   physician: Physician[] = [];
   dataEmail: string="";
+  dataStartDate:string="";
+  dataEndDate:string="";
   constructor(private dialog:MatDialog,private physicianService:DisplayDoctorsService){
 
   }
@@ -24,9 +26,8 @@ ngOnInit(){
   });
   
 }
-  openDialog(value:any){
-    console.log(value);
-    this.dialog.open(DialogAppointmentComponent,{data:{dataEmail:value}});
+  openDialog(value1:string,value2:string,value3:string){
+    this.dialog.open(DialogAppointmentComponent,{data:{dataEmail:value1,dataStartDate:value2,dataEndDate:value3}});
   }
 
 }

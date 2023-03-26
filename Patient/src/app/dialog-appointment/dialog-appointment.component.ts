@@ -16,9 +16,12 @@ import { MatDialogRef,MAT_DIALOG_DATA, } from '@angular/material/dialog';
 })
 export class DialogAppointmentComponent {
   hide=true;
-
+  minDate:Date;
+  maxDate:Date;
 
   constructor(private appointmentService: AppointmentServiceService, private router: Router, private appointment: Appointment,private dialogRef: MatDialogRef<BookappointmentComponent>,@Inject(MAT_DIALOG_DATA) public data: BookappointmentComponent) {
+    this.minDate=new Date(this.data.dataStartDate);
+    this.maxDate=new Date(this.data.dataEndDate);
   }
   onSubmit(value: any): void {
     this.appointment.id;
@@ -26,7 +29,6 @@ export class DialogAppointmentComponent {
     this.appointment.date = new CustomDatePipePipe('en-us').transform(value.date,'dd-MMM-yyyy');
     this.appointment.reason = value.reason;
     this.appointment.physcianEmail =this.data.dataEmail;
-    console.log(this.data.dataEmail);
     this.appointment.patientId;
     this.appointment.submissionDate =new CustomDatePipePipe('en-us').transform(new Date(),'dd-MMM-yyyy');
     console.log(this.appointment);

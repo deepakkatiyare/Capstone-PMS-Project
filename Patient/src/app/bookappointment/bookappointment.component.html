@@ -12,17 +12,19 @@
       *ngFor="let p of physician">
       <mat-card class="mat-elevation-z4">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title style="font-size: large;font-family: 'Roboto',sans-serif;">{{p.physicianEmail}}</mat-card-title>
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+          <mat-card-title style="font-size: large;font-family: 'Roboto',sans-serif;text-align: left;">{{p.physicianName}}</mat-card-title>
           
           <br>
-          <!-- <mat-card-subtitle style="font-size: medium;font-family: 'Roboto',sans-serif;">MBBS, MD(Pulmonary Medicine)
-            PULMONOLOGY | Consultant</mat-card-subtitle> -->
+           <mat-card-subtitle style="font-size: medium;font-family: 'Roboto',sans-serif;">{{p.email}}
+            </mat-card-subtitle> 
         </mat-card-header> 
-        <p class="availability"><b>Availability :</b> {{p.availability}} {{p.date}}</p>
+        <p class="availability"><b>Available From :</b> {{p.startDate}}</p>
+        <p class="availability"><b>Available To :</b> {{p.endDate}}</p>
+        <!-- <p class="availability"><b>Is Available :</b> {{p.isAvailable}}</p> -->
         <mat-card-footer style="text-align: right">
           <mat-card-actions fxFlexAlign="end">
-            <button mat-button class="end" style="height: fit-content; width: fit-content" (click)="openDialog(p.physicianEmail)">
+            <button mat-button class="end" style="height: fit-content; width: fit-content" (click)="openDialog(p.email,p.startDate,p.endDate)">
               <p class="text">Book Appointment</p>
             </button>
           </mat-card-actions>

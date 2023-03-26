@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class Physician {
-    physicianEmail:string="";
-    availability:string="";
-    date:string="";
+    email:string="";
+    physicianName:string="";
+    startDate:string="";
+    endDate:string="";
+    isAvailable:boolean=true;
 }
