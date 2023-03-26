@@ -16,6 +16,9 @@ public class PhysicianAvailabiltiyService {
 	public List<PhysicianAvailability> getPhysicians(){
 		return  repo.findAll();
 	}	
+	public long count() {
+		return repo.count();
+	}
 	public List<PhysicianAvailability> getAvailablePhysicians(boolean isAvailable){
 		return repo.findByIsAvailable(isAvailable);
 	}
@@ -23,8 +26,13 @@ public class PhysicianAvailabiltiyService {
 	public PhysicianAvailability addPhysicianAvailability(PhysicianAvailability availability) {
 		return repo.save(availability);
 	}
-	public PhysicianAvailability updatePhysicianAvailability(PhysicianAvailability availability){
-		return repo.save(availability);
+	
+	public void schedulePhysician(String startDate,String endDate,String email) {
+		repo.updateStartAndEndDate(startDate, endDate, email);
+	}
+	
+	public PhysicianAvailability update(PhysicianAvailability update) {
+		return repo.save(update);
 	}
 	public String deletePhysicianAvailabilityById(String email) {
 		return repo.deleteByEmail(email);
