@@ -4,7 +4,7 @@ import { Route, Router } from '@angular/router';
 import { CustomDatePipePipe } from '../custom-date-pipe.pipe';
 import { Patient } from '../Patient';
 import { PatientRegisterService } from '../patient-register.service';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient-regi',
@@ -14,7 +14,7 @@ import { PatientRegisterService } from '../patient-register.service';
 export class PatientRegiComponent {
   showError:boolean=false;
   passwordError:boolean=false;
-  constructor(private patientRegister: PatientRegisterService, private router: Router, private patient: Patient) {
+  constructor(private patientRegister: PatientRegisterService, private router: Router, private patient: Patient,private _snackBar: MatSnackBar) {
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -59,6 +59,7 @@ export class PatientRegiComponent {
   gotoUserList() {
     
       this.router.navigate(['/login']);
+      this._snackBar.open("Registered Successfully","",{duration: 2000});
     
   }
 }

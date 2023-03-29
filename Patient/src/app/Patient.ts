@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class Patient {
+    patientId:number=0;
     title: string = "";
     firstName: string = "";
     lastName: string = "";

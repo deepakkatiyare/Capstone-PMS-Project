@@ -27,12 +27,16 @@
           </button>
         </mat-form-field>
       </div>
-      <button class="b1" type="submit" mat-raised-button color="primary" routerLinkActive="active">
+      <button class="b2" type="submit" mat-raised-button color="primary" routerLinkActive="active">
         Login
       </button>
-      <button class="b2" mat-raised-button color="primary" routerLink="/register" routerLinkActive="active">
+      <button class="b1" mat-raised-button color="primary" routerLink="/register" routerLinkActive="active">
         Register
       </button>
+      <br>
+      <div>
+      <button class="b2" (click)="openDialog()">Forgot Password?</button>
+    </div>
       <mat-error *ngIf="showError">Please Register First!!!</mat-error>
       </form>
 </div>

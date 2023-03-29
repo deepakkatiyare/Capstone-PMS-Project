@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { ResetpasswordComponent } from './../resetpassword/resetpassword.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Component ,EventEmitter, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Patient } from '../Patient';
 import { PatientRegisterService } from '../patient-register.service';
 import {LoginService} from '../login.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -22,23 +24,31 @@ export class LoginComponent implements OnInit{
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
   patients:Patient[]=[];
-  constructor(private patientRegister: PatientRegisterService,private loginservice:LoginService,private patient:Patient,private router: Router){}
+  private patient:Patient=new Patient();
+  constructor(private patientRegister: PatientRegisterService,private loginservice:LoginService,private router: Router,private _snackBar: MatSnackBar,private dialog:MatDialog){}
   ngOnInit(){
     this.patientRegister.getPatients().subscribe(data =>{
       this.patients=data;
     });
   }
   hide = true;
+  currEmail:string="";
+  currPassword:string="";
   onSubmit(value: any): void {
-    for(var p of this.patients){
-      if(p.email==value.email && p.password==value.password){
-        this.router.navigate(['/patient-home']);
-        break;
-      }
-      else{
-        this.showError=true;
-      }
+    if(this.loginservice.loginPatient(value.email,value.password)){
+      this.router.navigate(['/patient-home']);
+      this.loginservice.loginPatient(value.email,value.password).subscribe(data =>{
+        this.patient=data;
+      });
+      sessionStorage.setItem("PatientId",this.patient.patientId.toString());
+      this._snackBar.open("Logged in Successfully","",{duration: 2000});
     }
+    else{
+      this.showError=true;
+    }
+    
   }
-  
+  openDialog(){
+    this.dialog.open(ResetpasswordComponent)
+  }
 }

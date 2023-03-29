@@ -14,6 +14,6 @@ export class DisplayDoctorsService {
   } 
 
   public findPhysician(): Observable<Physician[]> {
-    return this.http.get<Physician[]>(this.registerUrl);
+    return this.http.get<Physician[]>(this.registerUrl); 
   }
 }

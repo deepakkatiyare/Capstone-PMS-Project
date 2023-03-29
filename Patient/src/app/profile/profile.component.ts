@@ -1,28 +1,26 @@
 import { ResetpasswordComponent } from './../resetpassword/resetpassword.component';
-import { Component } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login.service';
+import { Patient } from '../Patient';
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
+export class ProfileComponent implements OnInit{
+  currEmail:string | null="";
+  currPassword:string | null="";
+  constructor(private loginservice:LoginService,public patient:Patient) {}
+   ngOnInit() {
+    this.currEmail=sessionStorage.getItem("email");
+    this.currPassword=sessionStorage.getItem("password");
+    this.loginservice.loginPatient(this.currEmail!,this.currPassword!).subscribe(data =>{
+      this.patient=data;
+    });
+   }
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-  hide = true;
-
-  constructor(private dialog:MatDialog){}
-  openDialog2(){
-    this.dialog.open(ResetpasswordComponent);
-  }
   
 }

@@ -20,4 +20,8 @@ export class LoginService {
     queryParams = queryParams.append("password",password);
     return this.http.get<Patient>(this.loginUrl,{params:queryParams});
   }
+
+  public getPatient(patientId:number):Observable<Patient>{
+    return this.http.get<Patient>('http://localhost:9004/api/v1/patient/'+patientId);
+  }
 }
