@@ -43,6 +43,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CustomDatePipePipe } from './custom-date-pipe.pipe';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { CustomDatePipePipe } from './custom-date-pipe.pipe';
     DialogAppointmentComponent,
     LoginComponent,
     ProfileComponent,
-    CustomDatePipePipe
+    CustomDatePipePipe,
+    UpdateProfileComponent
   ],
   imports: [
     ReactiveFormsModule,

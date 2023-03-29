@@ -1,0 +1,41 @@
+  <div class="updation">
+    <div>
+      <h1>Update</h1>
+    </div>
+    <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm.value)">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>FirstName</mat-label>
+          <input  matInput name="firstName" ngModel required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>LastName</mat-label>
+          <input matInput name="lastName" ngModel required />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" name="email" required ngModel />
+          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contact</mat-label>
+          <input matInput name="contact" ngModel required />
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-form-field appearance="outline" style="width:96%;">
+          <mat-label>Address</mat-label>
+          <textarea matInput name="address" ngModel></textarea>
+        </mat-form-field>
+        
+      </div>
+      <button type="submit" mat-raised-button color="primary" routerLinkActive="active">
+       Update
+      </button>
+      
+
+    </form>
+  </div>
