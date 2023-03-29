@@ -12,8 +12,8 @@ export class SidebarComponent {
   accordian!:MatAccordion;
   constructor(private _snackBar: MatSnackBar){}
   snackBar(){
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("password");
+    sessionStorage.removeItem("PatientId");
+    
     this._snackBar.open("LoggedOut","",{duration: 2000});
   }
 }

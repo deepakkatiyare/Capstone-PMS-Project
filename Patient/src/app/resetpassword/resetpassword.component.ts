@@ -12,7 +12,7 @@ import { Patient } from '../Patient';
   templateUrl: './resetpassword.component.html',
   styleUrls: ['./resetpassword.component.css']
 })
-export class ResetpasswordComponent implements OnInit{
+export class ResetpasswordComponent {
   hide = true;
   formData!: FormGroup;
   showError:boolean=false;
@@ -25,13 +25,17 @@ export class ResetpasswordComponent implements OnInit{
   }
   patient:Patient[]=[];
   constructor(private dialogRef: MatDialogRef<LoginComponent>,private getPatients:PatientRegisterService,private appservice:AppService) {}
-  ngOnInit(): void {
-    this.getPatients.getPatients().subscribe(result => {
-      this.patient=result;
-    });
-  }
+  // ngOnInit(): void {
+  //   this.getPatients.getPatients().subscribe(result => {
+  //     this.patient=result;
+  //   });
+  // }
 
   onSubmit(value:any):void{
+    this.getPatients.getPatients().subscribe(result => {
+          this.patient=result;
+        });
+    
     for(let p of this.patient){
       if(p.email==value.email){
         this.appservice.getPatientByEmail(value.email,value.password).subscribe(result => {

@@ -30,13 +30,14 @@
       <button class="b2" type="submit" mat-raised-button color="primary" routerLinkActive="active">
         Login
       </button>
+      <mat-error *ngIf="showError">Please Register First!!!</mat-error>
       <button class="b1" mat-raised-button color="primary" routerLink="/register" routerLinkActive="active">
         Register
       </button>
-      <br>
+      <pre></pre>
       <div>
-      <button class="b2" (click)="openDialog()">Forgot Password?</button>
+      <!-- <button class="b3" mat-raised-button color="primary" (click)="openDialog3()" >Forgot Password?</button> -->
     </div>
-      <mat-error *ngIf="showError">Please Register First!!!</mat-error>
+      
       </form>
 </div>

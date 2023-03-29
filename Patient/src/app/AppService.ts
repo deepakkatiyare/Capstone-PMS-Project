@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Patient } from './Patient';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppService {
     constructor(private http: HttpClient) {}
-    public getPatientByEmail(email:string,password:string):Observable<Patient>{
+    public getPatientByEmail(email:string,password:string):Observable<String>{
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("password",password);
-        return this.http.get<Patient>('http://localhost:9004/api/v1/patient/'+email,{params:queryParams});
+        queryParams = queryParams.append("emailId",email);
+        return this.http.post<String>('http://localhost:9002/api/v1/patient',password,{params:queryParams});
       }
 }
