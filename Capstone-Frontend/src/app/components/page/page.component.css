@@ -1,0 +1,22 @@
+mat-card {
+  width: 80%;
+  margin: 50px auto;
+}
+
+mat-card-header {
+  background-color: #008cba;
+  color: #fff;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  margin-bottom: 20px;
+}
+
+button[type="submit"] {
+  align-self: flex-end;
+}

@@ -1,0 +1,133 @@
+<div FxFle class="card-wrapper">
+    <div class="card-custom">
+        <div class="card-description" style="padding: 20px">
+            <p>
+                <span style="font-weight: 500">Name : </span>{{ patient.firstName }}
+            </p>
+            <p><span style="font-weight: 500">Age :</span> {{ patient.dob |age}}</p>
+            <p><span style="font-weight: 500">Gender :</span> {{ patient.gender }}</p>
+            <p>
+                <span style="font-weight: 500">Mbl No :</span>
+                {{ patient.contactNumber }}
+            </p>
+            <p>
+                <span style="font-weight: 500">Ailment :</span>
+                {{ailment}}
+            </p>
+        </div>
+        <div class="rightcard" style="padding: 20px">
+            <p><span style="font-weight: 500">blood group</span>:</p>
+            <p>
+                <span style="font-weight: 500">Last Consultation Date:</span>
+            </p>
+            <p>
+                <span style="font-weight: 500">Last Consultation with:</span>
+            </p>
+            <p>
+                <span style="font-weight: 500; word-wrap: break-word">Key Notes on previous Consultation</span>
+            </p>
+        </div>
+    </div>
+    <div class="mainbtn" style="display: flex; justify-content: space-between">
+        <button mat-raised-button (click)="openDialog()" color="primary" style="width: 50%">
+            Previous Health History
+        </button>
+    </div>
+</div>
+
+<h3 style="display :flex;justify-content: center;color:purple">Enter the Patient Details</h3>
+<div class="visitDetails">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmitt()">
+        <!-- <div
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        fxLayoutGap="70px"
+        fxLayout.lt-sm="column"
+        [ngStyle.xs]="{ 'font-size.px': 10, color: 'blue' }"
+        style="display: flex; flex-wrap: wrap"
+      > -->
+        <div>
+            <mat-form-field>
+                <mat-label>height</mat-label>
+                <input matInput type="text" placeholder="160 (in cm)" formControlName="heightt" id="heightt" required />
+                <!-- <mat-hint align="end">Not more then 50 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('heightt', 'required')">height is required</mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>weight</mat-label>
+                <input matInput type="text" placeholder="67 (in kg)" formControlName="weightt" id="weightt" required />
+                <!-- <mat-hint align="end">Not more then 10 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('weightt', 'required')">weight is required</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <mat-label>Bloodpressure Systolic</mat-label>
+                <input matInput type="text" placeholder="80 mmHg" formControlName="bpSystolic" id="bpSystolic"
+                    fxFlexOffset="20px" required />
+                <!-- <mat-hint align="end">Not more then 20 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('bpSystolic', 'required')">Bloodpressure Systolic is required</mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>bloodPressure Diastolic</mat-label>
+                <input matInput type="text" placeholder="80 mmHg" formControlName="bpDiastolic" id="bpDiastolic"
+                    required />
+                <!-- <mat-hint align="end">Not more then 50 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('bpDiastolic', 'required')">BloodPressure Diastolic is required</mat-error> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Respiration Rate</mat-label>
+                <input matInput type="text" placeholder="Breaths per minute" formControlName="respirationRate"
+                    id="respirationRate" required />
+                <!-- <mat-hint align="end">Not more then 10 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('respirationRate', 'required')">Respiration Rate is required</mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>sugar</mat-label>
+                <input matInput type="text" placeholder="140 (in mg/dL)" formControlName="sugar" id="sugar"
+                    fxFlexOffset="20px" required />
+                <!-- <mat-hint align="end">Not more then 20 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('sugar', 'required')">sugar is required</mat-error> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>BodyTemperature</mat-label>
+                <input matInput type="text" placeholder="37( in celsius)" formControlName="bodyTemperature"
+                    id="bodyTemperature" required />
+                <!-- <mat-hint align="end">Not more then 50 characters long.</mat-hint> -->
+                <!-- <mat-error *ngIf="myError('bodyTemperature', 'required')">BodyTemperature is required</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Allergies</mat-label>
+                <mat-select formControlName="allergies" multiple>
+                    <!-- <mat-select-trigger>
+                        {{visits['allergies'].value?.[0] || ''}}
+                        <span *ngIf="(visits['allergies'].value.length || 0) > 1" class="example-additional-selection">
+                            (+{{ (visits['allergies'].value.length || 0) - 1 }}
+                            {{ visits['allergies'].value.length === 2 ? "other" : "others" }})
+                        </span>
+
+                    </mat-select-trigger> -->
+                    <mat-option *ngFor="let topping of allergyData" [value]="topping.allergyDescription">{{
+                        topping.allergyDescription
+                        }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+        </div>
+        <div>
+            <textarea formControlName="somethingData" class="inputform" placeholder="Notes to physician..."
+                required></textarea>
+        </div>
+        <div>
+            <button mat-raised-button class="btnform">submit</button>
+        </div>
+    </form>
+</div>
