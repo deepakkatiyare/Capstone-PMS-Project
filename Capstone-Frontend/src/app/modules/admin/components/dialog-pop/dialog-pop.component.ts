@@ -13,9 +13,11 @@ import { PhysicianComponent } from '../physician/physician.component';
 export class DialogPopComponent {
   available: any;
   physicianAvail: any;
+  currentDate: any;
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, physicianAvailabilty: PhysicianAvailabilityService) {
     this.available = this.data.availability;
     this.physicianAvail = physicianAvailabilty;
+    this.currentDate = new Date();
   }
   range = new FormGroup({
     start: new FormControl(),

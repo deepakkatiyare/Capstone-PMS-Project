@@ -6,6 +6,7 @@ import { concatMap, map, tap } from 'rxjs';
 import { MatTabGroup } from '@angular/material/tabs';
 import { PhysicianAvailabilityService } from 'src/app/services/physician-availability.service';
 import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.service';
+import { PatientHealthRecordService } from 'src/app/services/patient-health-record.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,7 +15,9 @@ import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.ser
 export class DashboardComponent implements OnInit {
   doctorCount: any;
   patientCount: any;
-  constructor(public auth: AuthService, private physician: PhysicianAvailabilityService, private patient: PatientBasicInfoService) {
+  nurseCount: any;
+  adminCount: any;
+  constructor(public auth: AuthService, private physician: PhysicianAvailabilityService, private patient: PatientBasicInfoService, private nurse: PatientHealthRecordService) {
   }
 
   ngOnInit(): void {
@@ -26,7 +29,7 @@ export class DashboardComponent implements OnInit {
           setInterval(() => {
             if (this.doctorCount < count)
               this.doctorCount++;
-          }, 500);
+          }, 100);
         }
       }
     });
@@ -38,10 +41,33 @@ export class DashboardComponent implements OnInit {
           setInterval(() => {
             if (this.patientCount < count)
               this.patientCount++;
-          }, 500);
+          }, 100);
         }
       }
     })
+
+    this.nurse.getNurseCount().subscribe({
+      next: (count) => {
+        this.nurseCount = 0;
+        if (count != 0) {
+          setInterval(() => {
+            if (this.nurseCount < count)
+              this.nurseCount++;
+          }, 100);
+        }
+      }
+    })
+    this.getAdminCount();
+  }
+  getAdminCount() {
+    let count = 5;
+    this.adminCount = 0;
+    if (count != 0) {
+      setInterval(() => {
+        if (this.adminCount < count)
+          this.adminCount++;
+      }, 100);
+    }
   }
 }
 

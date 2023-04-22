@@ -1,6 +1,6 @@
 <div class=searchDiv>
     <div>
-        <h3>Pending Appointment</h3>
+        <h3>Pending Appointment For ({{selectDateAppointment}})</h3>
     </div>
     <div>
         <span>
@@ -68,9 +68,17 @@
 </div>
 
 <ng-container *ngIf="(app.length==0)">
-    <div style="display:flex;justify-content: center;">
-        <mat-card style="width:100%;text-align: center; padding:10px;margin:10px;">
-            Hey {{email}}! No Appointments is available.
+    <div>
+        <mat-card style="height:10vh;margin:1vw;text-align: center;">
+            <h3> No Appointment Available for ({{selectDateAppointment}})</h3>
+        </mat-card>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="this.dataSource.filteredData.length<=0 &&this.app.length>0">
+    <div>
+        <mat-card style="height:10vh;margin:1vw;text-align: center;">
+            <h3> No Matching Appointment Found For -- {{input.value}}</h3>
         </mat-card>
     </div>
 </ng-container>

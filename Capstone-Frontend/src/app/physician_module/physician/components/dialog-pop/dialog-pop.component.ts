@@ -50,17 +50,17 @@ export class AcceptDialogComponent {
   }
 
   openSnackBar() {
-    this._snackBar.open('Appointment Accepted Succesfully', 'Close', {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
+    this._snackBar.open('Appointment Accepted Succesfully!\nNurse Will update basic Diagnosis', 'Close', {
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom',
       duration: 2000,
       panelClass: ['snackbar']
     });
   }
   rejectSnackBar() {
     this._snackBar.open('Appointment Rejected Succesfully', 'Close', {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom',
       duration: 2000,
       panelClass: ['red_snackbar']
     });

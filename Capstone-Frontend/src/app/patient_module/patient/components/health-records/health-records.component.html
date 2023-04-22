@@ -19,7 +19,7 @@
             </mat-label><br><br>
         </div>
         <div>
-            <mat-label><b>BloodGroup:- </b>{{visit.bloodGroup}}</mat-label><br><br>
+            <mat-label><b>BloodGroup:- </b>{{visits[0].bloodGroup}}</mat-label><br><br>
             <mat-label>
                 <b *ngIf="nodata">Last Consultation On: NA</b>
                 <b *ngIf="!nodata">Last Consultation On: </b>
@@ -30,7 +30,7 @@
             <mat-label>
                 <b *ngIf="nodata">Last Consultation with: NA</b>
                 <b *ngIf="!nodata">Last Consultation with: </b>
-                <span *ngIf="!nodata">{{acceptedAppointment[0].physcianEmail}}</span>
+                <span *ngIf="!nodata">{{visits[0].physicianEmail}}</span>
             </mat-label><br><br>
             <mat-label>
                 <b *ngIf="nodata">Key Notes: NA</b>
@@ -64,7 +64,6 @@
                             <mat-card-subtitle>Ailment : {{appointment.reason}}</mat-card-subtitle><br />
                         </mat-card-title-group>
                     </mat-card-header>
-
                 </mat-card>
             </div>
         </div>
@@ -81,12 +80,19 @@
                                 <!-- <div mat-card-avatar class="example-header-image"></div> -->
                                 <mat-card-title>Appointment Details
                                     ({{acceptedAppointment[i] .date}})</mat-card-title><br />
+                                <button mat-icon-button matTooltip="View PDF"
+                                    (click)="sendingAppointmentIdForPdfComponent(acceptedAppointment[i].id)"
+                                    routerLink="/patient/pdfView" style="height: 20%;
+                                 margin-right: -33px; "><mat-icon matTooltip="View PDF"><span
+                                            class="material-icons-outlined">
+                                            download_for_offline
+                                        </span></mat-icon></button>
                                 <mat-card-title style="color:green">Status :
                                     {{acceptedAppointment[i].acceptance}}</mat-card-title><br />
                                 <mat-card-subtitle>Physician Email :
                                     {{acceptedAppointment[i].physcianEmail}}</mat-card-subtitle><br />
                                 <mat-card-subtitle>Nurse Email : {{appointment.nurseEmail}}</mat-card-subtitle><br />
-                                <mat-card-subtitle>Ailment : {{appointment.reason}}</mat-card-subtitle><br />
+                                <mat-card-subtitle>Ailment : {{acceptedAppointment[i].reason}}</mat-card-subtitle><br />
                                 <mat-card-subtitle>Height : {{appointment.height}} cm</mat-card-subtitle><br />
                                 <mat-card-subtitle>Weight : {{appointment.weight}} kg</mat-card-subtitle><br />
 

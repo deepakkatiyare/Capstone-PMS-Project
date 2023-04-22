@@ -11,33 +11,16 @@
         [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon><span class="material-symbols-outlined">groups</span> </mat-icon>
     </button>
-    <!-- <button mat-icon-button matTooltip="mail" class="example-icon favorite-icon"
-        aria-label="Example icon-button with heart icon" routerLink="/mail" routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon><span class="material-symbols-outlined">mail</span> </mat-icon>
-    </button> -->
-
-    <!-- <button mat-icon-button matTooltip="notifications" class="example-icon favorite-icon"
-        aria-label="Example icon-button with heart icon" routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon matBadge="156" matBadgeColor="warn">notifications</mat-icon>
-    </button> -->
-    <button matTooltip="logout" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
-        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [matMenuTriggerFor]="menu">
-        <mat-icon><span class="material-symbols-outlined"> logout </span></mat-icon>
+    <button mat-icon-button aria-label="" routerLinkActive="active" [matMenuTriggerFor]="menu1">
+        <mat-icon><span class="material-symbols-outlined">
+                more_vert
+            </span></mat-icon>
     </button>
-    <!-- <button class="mail" >
-        <mat-icon>
-            <span class="material-icons-outlined">
-                logout
-            </span>
-        </mat-icon>
-    </button> -->
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu1="matMenu">
         <div mat-menu-item *ngIf="auth.user$ | async as user">
-            {{ user.name }}
+            <mat-icon>person</mat-icon>{{ user.name }}
         </div>
-        <button mat-menu-item (click)="auth.logout()">Sign-out</button>
+        <button mat-menu-item (click)="auth.logout()"><mat-icon>logout</mat-icon>Logout</button>
     </mat-menu>
 </mat-toolbar>
 <mat-sidenav-container>
@@ -49,9 +32,9 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-button class="menu-button" routerLink="/profile">
-            <mat-icon>person</mat-icon>
-            <span>Profile</span>
+        <button mat-button class="menu-button" routerLink="/nurse/dashboard" routerLinkActive="active">
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
         </button>
         <button mat-button class="menu-button" routerLink="/home">
             <mat-icon><span class="material-symbols-outlined"> history </span></mat-icon>

@@ -1,5 +1,5 @@
 .example-card {
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .example-header-image {
@@ -22,4 +22,12 @@
     width: 25%;
     padding: 0 15px;
   }
+}
+
+img {
+  width: 50%;
+  height: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
 }

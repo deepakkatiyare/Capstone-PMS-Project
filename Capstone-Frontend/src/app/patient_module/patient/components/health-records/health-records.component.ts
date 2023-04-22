@@ -38,7 +38,7 @@ export class HealthRecordsComponent {
   pageIndex = 0;
   pageEvent!: PageEvent;
 
-
+  pdfcomponent: any;
   visits: PatientInfoDetails[] = [];
   patientId: any;
   healthRecords: HealthRecords[] = []
@@ -132,5 +132,10 @@ export class HealthRecordsComponent {
     this.pageIndex = e.pageIndex;
     this.getPendingAppointments(this.pageIndex, this.pageSize)
     this.getAcceptedAppointments(this.pageIndex, this.pageSize);
+  }
+
+  sendingAppointmentIdForPdfComponent(id: any) {
+    sessionStorage.setItem("appointmentId", id);
+    console.log("sssssssssssssssssssssssssssssssssssssssssssssssssss" + id);
   }
 }

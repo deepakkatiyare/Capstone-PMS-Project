@@ -1,9 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AppointmentDto } from 'src/app/model_classes/appointment';
 import { Patient } from 'src/app/model_classes/Patient';
 import { AgePipe } from 'src/app/Pipes/age.pipe';
+import { AllergyService } from 'src/app/services/allergy.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.service';
 
@@ -14,6 +16,7 @@ export class Appointment {
   patientId: any
   patientName: any
   patientEmail: any
+  physicianEmail: any
   date: any;
   age: any;
   gender: any;
@@ -31,29 +34,38 @@ export class AppointmentsComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   pageEvent!: PageEvent;
-
+  todayDate: any;
   appointmentArr: Appointment[] = [];
   app: AppointmentDto[] = [];
   patientData: Patient[] = [];
   variable: any;
   dataSource: any;
+  event: any;
   particularPatient: any;
-  constructor(public patientInfo: PatientBasicInfoService, private appointment: AppointmentService) {
+  constructor(private eventEmitter: AllergyService, public patientInfo: PatientBasicInfoService, private appointment: AppointmentService) {
     this.length = 0;
   }
 
   ngOnInit(): void {
+    var date = new Date();
+    this.todayDate = new DatePipe('en-us').transform(date, 'dd-MMM-yyyy');
     this.getAcceptanceCount();
     this.getAppointments(this.pageIndex, this.pageSize);
+    this.event = this.eventEmitter.getAppointmentEvent();
+    this.event.subscribe(() => {
+      this.getAcceptanceCount();
+      this.getAppointments(this.pageIndex, this.pageSize);
+    })
+
   }
   getAcceptanceCount() {
-    this.appointment.getAllAcceptanceAppointmentCount().subscribe(count => {
+    this.appointment.getAllAcceptanceAppointmentCount(this.todayDate).subscribe(count => {
       this.length = new Number(count).valueOf();
     })
   }
 
   getAppointments(index: number, size: number) {
-    this.appointment.getAppointments(index, size).subscribe((data: AppointmentDto[]) => {
+    this.appointment.getAppointments(this.todayDate, index, size).subscribe((data: AppointmentDto[]) => {
       console.log(data);
       this.app = data;
       for (let i = 0; i < this.app.length; i++) {
@@ -71,6 +83,7 @@ export class AppointmentsComponent implements OnInit {
             this.appointmentArr[i].gender = this.patientData[i].gender;
             this.appointmentArr[i].contact = this.patientData[i].contactNumber;
             this.appointmentArr[i].ailment = this.app[i].reason;
+            this.appointmentArr[i].physicianEmail = this.app[i].physcianEmail;
           });
       }
       this.dataSource = new MatTableDataSource<Appointment>(this.appointmentArr);
@@ -83,10 +96,6 @@ export class AppointmentsComponent implements OnInit {
     sessionStorage.setItem('appId', appId);
     sessionStorage.setItem('physicianEmail', phyEmail);
     sessionStorage.setItem("ailment", ailment);
-    console.log(this.patientData[data].patientId);
-    console.log('appointment id is');
-
-    console.log(appId);
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -8,96 +8,86 @@
         </div> -->
         <div>
             <p>
-                <span style="font-weight: 700">Name :{{ patientdetail.firstName }}</span>
+                <span style="font-weight: 500">Name :{{ patientdetail.firstName }}</span>
             </p>
-            <p><span style="font-weight: 700">Age :</span> {{ patientdetail.dob|age}}</p>
-            <p><span style="font-weight: 700">Gender :</span> {{ patientdetail.gender }}</p>
+            <p><span style="font-weight: 500">Age :</span> {{ patientdetail.dob|age}}</p>
+            <p><span style="font-weight: 500">Gender :</span> {{ patientdetail.gender }}</p>
             <p>
-                <span style="font-weight: 700">Mbl No :</span>
+                <span style="font-weight: 500">Contact No. :</span>
                 {{ patientdetail.contactNumber}}
             </p>
         </div>
-        <div>
-            <p><span style="font-weight: 700">blood group</span>:{{patientVisitdetail.bloodGroup}}
-            <p>
-            <p>
-                <span style="font-weight: 700">Last Consultation Date:</span> Consultation Date
-            </p>
-            <p>
-                <span style="font-weight: 700">Last Consultation with:</span> Doctor Name
-                Kurkure
-            </p>
-            <p>
-                <span style="font-weight: 700">Key Notes on previous Consultation</span>: Key Notes on previous
-                Consultation
-            </p>
-        </div>
+        <ng-container *ngIf="appointmentsHistory.length!=0">
+            <div>
+
+                <p><span style="font-weight: 500">BloodGroup : </span>{{bloodgroup}}</p>
+                <p>
+                    <span style="font-weight: 500">Last Consultation Date: </span>{{lastConsultationDate}}
+                </p>
+                <p>
+                    <span style="font-weight: 500">Last Consultation with: </span>{{lastPhysicianEmail}}
+                </p>
+                <p>
+                    <span style="font-weight: 500; word-wrap: break-word">Key Notes on previous Consultation:
+                    </span>{{keyNotes}}
+                </p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="appointmentsHistory.length==0">
+            <div>
+
+                <p><span style="font-weight: 500">BloodGroup : NA</span></p>
+                <p>
+                    <span style="font-weight: 500">Last Consultation Date: NA</span>
+                </p>
+                <p>
+                    <span style="font-weight: 500">Last Consultation with: NA</span>
+                </p>
+                <p>
+                    <span style="font-weight: 500; word-wrap: break-word">Key Notes on previous Consultation:
+                        NA</span>
+                </p>
+            </div>
+        </ng-container>
     </div>
-    <!-- 00000000000000000000000000000000000 -->
     <div class="card-custom" *ngIf="patientVisitdetail">
         <div>
             <p>
-                <span style="font-weight: 700">BloodPressure : </span>{{ patientVisitdetail.bpDiastolic }}/{{
-                patientVisitdetail.bpSystolic }}
+                <span style="font-weight: 500">BloodPressure : </span>{{ patientVisitdetail.bpSystolic}}/{{
+                patientVisitdetail.bpDiastolic}} (Systolic/Diastolic)
             </p>
             <p>
-                <span style="font-weight: 700">height :</span> {{ patientVisitdetail.height }}
+                <span style="font-weight: 500">height :</span> {{ patientVisitdetail.height }} cm
             </p>
             <p>
-                <span style="font-weight: 700">Weight :</span>{{ patientVisitdetail.weight }}
+                <span style="font-weight: 500">Weight :</span>{{ patientVisitdetail.weight }} kg
             </p>
             <p>
-                <span style="font-weight: 700">BodyTemperature :</span>
-                {{ patientVisitdetail.bodyTemparature }}
+                <span style="font-weight: 500">BodyTemperature :</span>
+                {{ patientVisitdetail.bodyTemparature }} Fahrenheit
             </p>
         </div>
         <div>
             <p>
-                <span style="font-weight: 700">Respiration Rate :</span>
-                {{ patientVisitdetail.respirationRate }}
+                <span style="font-weight: 500">Respiration Rate :</span>
+                {{ patientVisitdetail.respirationRate }} Breaths per minute
             </p>
             <p>
-                <span style="font-weight: 700">Allergies :</span>
-                Skin Allergy, Food Allergy
+                <span style="font-weight: 500;">Allergies
+                    :</span>
+                {{patientVisitdetail.allergies}}
             </p>
             <p>
-                <span style="font-weight: 700"> Physician Email :</span>
+                <span style="font-weight: 500"> Physician Email :</span>
                 {{ patientVisitdetail.physicianEmail }}
             </p>
             <p>
-                <span style="font-weight: 700"> Nurse Email :</span>
+                <span style="font-weight: 500"> Nurse Email :</span>
                 {{ patientVisitdetail.nurseEmail }}
             </p>
         </div>
     </div>
 </div>
-<!-- 00000000000000000000000000000000000 -->
-
-<!-- <div class="" *ngIf="patientVisitdetail">
-    <h2 style="font-size: 40px; text-align: center">Basic diagnoses</h2>
-    <div class="maincontent" style="display: flex; flex-direction: column">
-        <div class="lineone" style="display: flex; justify-content: space-around">
-            <p>Height: {{ patientVisitdetail.height }}</p>
-            <p>Weight: {{ patientVisitdetail.weight }}</p>
-            <p>Allegrey: {{ patientVisitdetail.visitId }}</p>
-        </div>
-        <div class="lineone" style="display: flex; justify-content: space-around">
-            <p>
-                BloodPressureSystolic: {{ patientVisitdetail.bloodPressureSystolic }}
-            </p>
-            <p>
-                BloodPressureDiastolic:
-                {{ patientVisitdetail.bloodPressureDiastolic }}
-            </p>
-            <p>BodyTemperature: {{ patientVisitdetail.bodyTemperature }}</p>
-        </div>
-        <div class="lineone" style="display: flex; justify-content: space-around">
-            <p>respirationRate: {{ patientVisitdetail.respirationRate }}</p>
-            <p>bloodGroup: {{ patientVisitdetail.bloodGroup }}</p>
-            <p>keyNotes: {{ patientVisitdetail.keyNotes }}</p>
-        </div>
-    </div>
-</div> -->
 <div style="display: flex; flex-direction: column">
     <h1 style="text-align: center;color:#810CA8; font-family: 'Roboto', sans-serif;">Prescription</h1>
     <table class="table" style="text-align: center;    width: 56%;
@@ -247,82 +237,11 @@
     </table>
     <!-- <button class="submitbtn" (click)="testsubmit(newTest)">Submit</button> -->
     <button class="done" (click)="submitTestAndPrescription(id,newTest,newMedicine)" mat-stroked-button
-        style="border: 1px solid #2D033B;z-index: 99;">
+        style="border: 1px solid #2D033B;z-index: 99;" routerLink="/physician/appointments">
         submit
     </button>
 
 </div>
-
-
-
-
-
-
-
-<!-- <button
-    (click)="toggleContent()"
-    mat-raised-button
-    color="primary"
-    style="width: 30%; margin: 5px"
-  >
-    Previous Health History
-  </button> -->
-<!-- <div *ngFor="let appointment of appointmentsHistory;let i = index">
-    <div>
-        <div *ngIf="showContent">
-            <mat-expansion-panel style="background-color: #fafafa" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
-
-                <mat-expansion-panel-header>
-                    <mat-panel-title style="font-weight: bolder">
-                        Health Records
-                    </mat-panel-title>
-                    <mat-panel-description>{{appointment.date}}</mat-panel-description>
-                    <mat-panel-description>{{appointment.reason}}</mat-panel-description>
-                </mat-expansion-panel-header>
-
-                <h1>Test Result :</h1>
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Dosage</th>
-                        <th>Notes</th>
-                    </tr>
-                    <tr *ngFor="let test of PatientsTests[i]">
-                        <td>{{test.testName}}</td>
-                        <td>{{test.result}}</td>
-                        <td>{{test.testNotes}}</td>
-                    </tr>
-
-                </table>
-
-                <div>
-                    <h1>Prescription :</h1>
-                    <table>
-                        <tr>
-                            <th>Name</th>
-                            <th>Dosage</th>
-                            <th>Notes</th>
-                        </tr>
-                        <tr *ngFor="let prescription of prescriptions[i]">
-                            <td>{{prescription.prescriptionName}}</td>
-                            <td>{{prescription.dosage}}</td>
-                            <td>{{prescription.prescriptionNotes}}</td>
-                        </tr>
-
-                    </table>
-                </div>
-            </mat-expansion-panel>
-        </div>
-    </div>
-    <br>
-</div>
--->
-
-
-
-
-
 
 
 <mat-accordion *ngIf="showContent">
@@ -346,48 +265,47 @@
                 </mat-expansion-panel-header>
                 <h2>Patient Details</h2>
 
-                <div style="height: 60vh; overflow-y: scroll; overflow-x: hidden">
-                    <div FxFle class="card-wrapper" style="background-color: papayawhip">
-                        <div class="card-custom">
-                            <div>
-                                <p>
-                                    <span style="font-weight: 700">BloodPressure :
-                                    </span>{{patientHistoryVisitdetail[i].bpDiastolic
-                                    }}/{{
-                                    patientHistoryVisitdetail[i].bpSystolic }}
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700">height :</span>
-                                    {{patientHistoryVisitdetail[i].height }}
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700">Weight
-                                        :</span>{{patientHistoryVisitdetail[i].weight
-                                    }}
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700">BodyTemperature :</span>
-                                    {{ patientHistoryVisitdetail[i].bodyTemparature }}
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    <span style="font-weight: 700">Respiration Rate :</span>
-                                    {{ patientHistoryVisitdetail[i].respirationRate }}
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700">Allergies :</span>
-                                    Skin Allergy, Food Allergy
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700"> Physician Email :</span>
-                                    {{ patientHistoryVisitdetail[i].physicianEmail }}
-                                </p>
-                                <p>
-                                    <span style="font-weight: 700"> Nurse Email :</span>
-                                    {{ patientHistoryVisitdetail[i].nurseEmail }}
-                                </p>
-                            </div>
+                <div style="overflow-y: scroll; overflow-x: hidden">
+                    <div class="previous-health-record">
+                        <div>
+                            <p>
+                                <span style="font-weight: 700">BloodPressure :
+                                </span>{{patientHistoryVisitdetail[i].bpSystolic
+                                }}/{{
+                                patientHistoryVisitdetail[i].bpDiastolic}}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700">height :</span>
+                                {{patientHistoryVisitdetail[i].height }}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700">Weight
+                                    :</span>{{patientHistoryVisitdetail[i].weight
+                                }}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700">BodyTemperature :</span>
+                                {{ patientHistoryVisitdetail[i].bodyTemparature }}
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span style="font-weight: 700">Respiration Rate :</span>
+                                {{ patientHistoryVisitdetail[i].respirationRate }}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700">Allergies
+                                    :</span>{{patientHistoryVisitdetail[i].allergies}}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700"> Physician Email :</span>
+                                {{ patientHistoryVisitdetail[i].physicianEmail }}
+                            </p>
+                            <p>
+                                <span style="font-weight: 700"> Nurse Email :</span>
+                                {{ patientHistoryVisitdetail[i].nurseEmail }}
+                            </p>
+
                         </div>
                     </div>
                     <div class="row" style="display: flex">
@@ -455,7 +373,7 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                         Test Name
                                     </th>
-                                    <td mat-cell *matCellDef="let row">{{ row.testName }}%</td>
+                                    <td mat-cell *matCellDef="let row">{{ row.testName }}</td>
                                 </ng-container>
 
                                 <!-- Name Column -->

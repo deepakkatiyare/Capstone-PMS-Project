@@ -52,9 +52,10 @@
 
 .centered {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 2%;
+    top: 1%;
+    width: 95vw;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .text-primary-p {

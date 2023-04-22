@@ -37,7 +37,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { LoginComponent } from './components/login/login.component';
 import { PatientRegiComponent } from './components/patient-regi/patient-regi.component';
 import { ForgotpasswordComponent } from './components/forgotpssword/forgotpssword.component';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [
     IndexComponent,
@@ -86,11 +86,10 @@ import { ForgotpasswordComponent } from './components/forgotpssword/forgotpsswor
       authorizationParams: {
         redirect_uri: window.location.origin,
       }
-
     }),
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

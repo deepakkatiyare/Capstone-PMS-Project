@@ -67,14 +67,12 @@ export class PendingListComponent implements OnInit {
       this.selectDateAppointment = current;
       this.getAppointments(current);
       this.appointmentUpdated.subscribe(() => {
-        console.log("data emitted 1")
         this.appointmentArr = [];
         this.getAppointments(this.selectDateAppointment);
       });
     }
     else {
       this.appointmentUpdated.subscribe(() => {
-        console.log("data emitted 2")
         this.appointmentArr = [];
         this.getAppointments(this.selectDateAppointment);
       });
@@ -83,12 +81,10 @@ export class PendingListComponent implements OnInit {
 
   getAppointments(date: any) {
     this.service.getAppointmentBYEmailAndDateAndStatus(this.email, date, this.status).subscribe((data: AppointmentDto[]) => {
-      console.log(data);
       this.app = data;
       for (let i = 0; i < this.app.length; i++) {
         this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
           this.patientData[i] = data1;
-          console.log(this.patientData[i]);
           this.appointmentArr[i] = new Appointment();
           this.appointmentArr[i].id = this.app[i].id;
           this.appointmentArr[i].patientId = this.patientData[i].patientId;
@@ -112,7 +108,6 @@ export class PendingListComponent implements OnInit {
     this.selectDateAppointment = SelectByDate;
     this.getAppointments(SelectByDate);
     this.appointmentUpdated.subscribe(() => {
-      console.log("data emitted 3")
       this.appointmentArr = [];
       this.getAppointments(this.selectDateAppointment);
     });

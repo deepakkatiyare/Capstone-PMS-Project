@@ -6,6 +6,7 @@ import { PatienthomeComponent } from './components/patienthome/patienthome.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TestdetailsComponent } from './components/testdetails/testdetails.component';
+import { PdfviewComponent } from './components/pdfview/pdfview.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,9 @@ const routes: Routes = [
 
       {
         path: "profile", component: ProfileComponent
+      },
+      {
+        path: "pdfView", component: PdfviewComponent
       },
     ]
   }

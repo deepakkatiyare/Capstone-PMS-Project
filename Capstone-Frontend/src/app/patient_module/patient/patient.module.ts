@@ -39,9 +39,11 @@ import { PhysicianAvailabilityService } from 'src/app/services/physician-availab
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PipeModule } from 'src/app/services/pipe/pipe.module';
 import { LogoutDialogComponent } from './components/dialog-pop/dialog-pop.component';
+import { PdfviewComponent } from './components/pdfview/pdfview.component';
 
 @NgModule({
   declarations: [
+    PdfviewComponent,
     LogoutDialogComponent,
     BookappointmentComponent,
     DialogAppointmentComponent,

@@ -12,23 +12,22 @@ img {
     max-width: 100%;
 }
 
-/* .card-wrapper {
-    border: 1px solid #191825;
-    border-radius: 10px;
-    padding: .75rem;
-
-} */
-
 .mat-mdc-form-field+.mat-mdc-form-field {
     margin-left: 8px;
 }
 
-/* .card-custom {
+.previous-health-record {
+    border: 1px solid #191825;
+    border-radius: 10px;
+    padding: .75rem;
     display: flex;
-    width: 100vw;
-    margin: 10px;
+    flex-direction: row;
+    background-color: papayawhip;
+    height: 30vh;
     justify-content: space-between;
-} */
+    width: 90vw;
+    margin: 5vh;
+}
 
 .mat-mdc-form-field+.mat-mdc-form-field {
     margin-left: 8px;

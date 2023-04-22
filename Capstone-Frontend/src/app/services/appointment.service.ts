@@ -12,9 +12,9 @@ export class AppointmentService {
   constructor(public http: HttpClient) { }
 
   //To get All the accepted appointments
-  public getAppointments(index: any, size: any): Observable<AppointmentDto[]> {
+  public getAppointments(date: any, index: any, size: any): Observable<AppointmentDto[]> {
     return this.http.get<AppointmentDto[]>(
-      'http://localhost:9003/indexed-appointments/acceptance/' + index + "/" + size
+      'http://localhost:9003/indexed-appointments/acceptance/' + date + '/' + index + "/" + size
     );
   }
   //To get status of the appointment by the patient id
@@ -76,7 +76,7 @@ export class AppointmentService {
     return this.http.get("http://localhost:9003/pending/appointment/patient/" + id);
   }
 
-  public getAllAcceptanceAppointmentCount() {
-    return this.http.get("http://localhost:9003/acceptance/appointment/count")
+  public getAllAcceptanceAppointmentCount(date: any) {
+    return this.http.get("http://localhost:9003/acceptance/appointment/count/" + date);
   }
 }

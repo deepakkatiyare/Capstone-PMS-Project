@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
         setInterval(() => {
           if (this.acceptedCount < count)
             this.acceptedCount++;
-        }, 500);
+        }, 100);
       }
     })
     this.appointment.getPendingAppointmentCount(this.email).subscribe(count => {
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
         setInterval(() => {
           if (this.pendingCount < count)
             this.pendingCount++;
-        }, 500);
+        }, 100);
       }
     })
     this.appointment.getAppointmentCount(this.email).subscribe(count => {
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
         setInterval(() => {
           if (this.appointmentCount < count)
             this.appointmentCount++;
-        }, 500);
+        }, 100);
       }
     })
   }

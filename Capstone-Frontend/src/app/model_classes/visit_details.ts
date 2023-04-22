@@ -1,5 +1,5 @@
 export class PatientInfoDetails {
-  allergyId: any;
+  allergies: any;
   appointmentId: any;
   bloodGroup: any;
   bodyTemparature: any;

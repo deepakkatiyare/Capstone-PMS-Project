@@ -8,9 +8,9 @@ describe('DialogPopComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogPopComponent ]
+      declarations: [DialogPopComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DialogPopComponent);
     component = fixture.componentInstance;

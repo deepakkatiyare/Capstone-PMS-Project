@@ -1,6 +1,6 @@
 <div class=searchDiv>
   <div>
-    <h3>Accepted Appointment</h3>
+    <h3>Accepted Appointment For ({{selectedDate}})</h3>
   </div>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" (selectedTabChange)="getCurrentDate($event)">
     <mat-tab class="tab" label="Today" name="Dob"></mat-tab>
@@ -29,21 +29,24 @@
       box-sizing: border-box;
     ">
     <ng-container *ngIf="(app.length!=0)">
-      <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let details of app; let i = index">
+      <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="33%"
+        *ngFor="let details of this.dataSource.filteredData; let i = index">
         <mat-card class="mat-elevation-z4">
           <mat-card-header style="line-height:2;letter-spacing:1px;align-items: center;margin-top:-8px;">
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>
-              {{patientData[i].title+" "+patientData[i].firstName +" "+patientData[i].lastName}}</mat-card-title>
+              {{details.patientName|uppercase}}</mat-card-title>
           </mat-card-header>
           <mat-divider></mat-divider>
           <mat-card-header style="line-height:1.6;letter-spacing:1px;">
-            <mat-card-subtitle style="margin-right: 5px;">Email : {{patientData[i].email}}</mat-card-subtitle>
-            <mat-card-subtitle style="margin-right: 5px;">Appointment-Date : {{details.date}}</mat-card-subtitle>
-            <mat-card-subtitle>Age : {{patientData[i].dob|age}}</mat-card-subtitle>
-            <mat-card-subtitle>Gender : {{patientData[i].gender}}</mat-card-subtitle>
-            <mat-card-subtitle>Contact-Number: {{ patientData[i].contactNumber}}</mat-card-subtitle>
-            <mat-card-subtitle>Ailment : {{details.reason}}</mat-card-subtitle>
+            <mat-card-subtitle style="margin-right: 5px;">Email :
+              {{details.patientEmail}}</mat-card-subtitle>
+            <mat-card-subtitle style="margin-right: 5px;">Appointment-Date :
+              {{details.date}}</mat-card-subtitle>
+            <mat-card-subtitle>Age : {{details.age}}</mat-card-subtitle>
+            <mat-card-subtitle>Gender : {{details.gender}}</mat-card-subtitle>
+            <mat-card-subtitle>Contact-Number: {{details.contact}}</mat-card-subtitle>
+            <mat-card-subtitle>Ailment : {{details.ailment}}</mat-card-subtitle>
           </mat-card-header>
           <br />
           <mat-card-footer>
@@ -62,9 +65,17 @@
   </div>
 </div>
 <ng-container *ngIf="(app.length==0)">
-  <div style="display:flex;justify-content: center;">
-    <mat-card style="width:100%;text-align: center; padding:10px;margin:10px;">
-      Hey {{email}}! No Appointments is available.
+  <div>
+    <mat-card style="height:10vh;margin:1vw;text-align: center;">
+      <h3> No Appointment Available for ({{selectedDate}})</h3>
+    </mat-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="this.dataSource.filteredData.length<=0 &&this.app.length>0">
+  <div>
+    <mat-card style="height:10vh;margin:1vw;text-align: center;">
+      <h3> No Matching Appointment Found For -- {{input.value}}</h3>
     </mat-card>
   </div>
 </ng-container>

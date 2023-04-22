@@ -11,6 +11,9 @@ import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component'
 import { AllergyService } from 'src/app/services/allergy.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Allergy } from 'src/app/model_classes/allergy';
+import { PatientHealthRecordService } from 'src/app/services/patient-health-record.service';
+import { AppointmentsComponent } from '../appointments/appointments.component';
+import { AppointmentDto } from 'src/app/model_classes/appointment';
 
 @Component({
   selector: 'app-addpatientinfo',
@@ -18,30 +21,29 @@ import { Allergy } from 'src/app/model_classes/allergy';
   styleUrls: ['./addpatientinfo.component.css']
 })
 export class AddpatientinfoComponent {
+  [x: string]: any;
   public myForm!: FormGroup;
   constructor(
     public dialog: MatDialog,
     public patientService: PatientBasicInfoService,
-    private shared: AppsubService,
-    private allergyService: AllergyService
+    private allergyService: AllergyService,
+    private healthRecord: PatientHealthRecordService,
+    private appointment: AppointmentService
   ) { }
-  // constructor(public patientData : AppointmentService){}
+
 
   selectedItem: any;
   nurseEmail = sessionStorage.getItem("NURSE_EMAIL");
-  // toppings = new FormControl('');
 
-  // console.log();
-
-  toppingList: string[] = [
-    'Skin Allergy',
-    'Eye Allergy',
-    'Nose Allergy',
-    'Food Allergy',
-    'Dust Allergy',
-    'Dust Allergy',
-    'Dust Allergy',
-    'Dust Allergy',
+  bloodgroup: string[] = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-'
   ];
 
   openDialog() {
@@ -56,12 +58,17 @@ export class AddpatientinfoComponent {
   phys: any;
   patientData: any;
   patient!: Patient;
-
+  submitted = false;
+  appointmentsHistory: AppointmentDto[] = [];
   allergyData: Allergy[] = [];
   allergyIds: Allergy[] = [];
   toppings = new FormControl();
   selectedToppings: [] = [];
   ailment: any;
+  keyNotes: any;
+  lastPhysicianEmail: any;
+  lastConsultationDate: any;
+
   ngOnInit(): void {
     this.patientData = sessionStorage.getItem('arraydata');
     this.ailment = sessionStorage.getItem('ailment');
@@ -71,32 +78,60 @@ export class AddpatientinfoComponent {
     this.appointmentAppointmentsId = sessionStorage.getItem('appId');
     this.phys = sessionStorage.getItem('physicianEmail');
     this.myForm = new FormGroup({
-      heightt: new FormControl('', [Validators.required]),
-      bpSystolic: new FormControl('', [Validators.required]),
-      weightt: new FormControl('', [Validators.required]),
-      bpDiastolic: new FormControl('', [Validators.required]),
-      respirationRate: new FormControl('', [Validators.required]),
-      bodyTemperature: new FormControl('', [Validators.required]),
+      heightt: new FormControl('', [Validators.required, Validators.max(200), Validators.min(20), Validators.pattern('[0-9]+')]),
+      bpSystolic: new FormControl('', [Validators.required, Validators.min(20), Validators.max(140), Validators.pattern('[0-9]+')]),
+      weightt: new FormControl('', [Validators.required, Validators.max(500), Validators.min(3), Validators.pattern('[0-9]+')]),
+      bpDiastolic: new FormControl('', [Validators.required, Validators.min(20), Validators.max(140), Validators.pattern('[0-9]+')]),
+      respirationRate: new FormControl('', [Validators.required, Validators.min(12), Validators.max(40), Validators.pattern('[0-9]+')]),
+      bodyTemperature: new FormControl('', [Validators.required, Validators.min(50), Validators.max(115), Validators.pattern('[0-9]+')]),
       allergies: new FormControl('', [Validators.required]),
-      sugar: new FormControl('', [Validators.required]),
-      somethingData: new FormControl('', [Validators.required]),
+      bloodgroup: new FormControl(),
+      sugar: new FormControl('', [Validators.required, Validators.min(15), Validators.max(300), Validators.pattern('[0-9]+')]),
+      somethingData: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9 ]+"), Validators.maxLength(300)]),
     });
-
     this.allergyService.getAllergies().subscribe((data: any) => {
       this.allergyData = data;
+      console.log("Allegry Data");
+      console.log(data);
+    });
+    this.getRecentAppointment()
+  }
+
+  getRecentAppointment() {
+    const appointmentHistory = this.appointment.getAppointmentByStatusAndId(this.patientData, 'completed', 0, 20)
+    appointmentHistory.subscribe((data) => {
+      this.appointmentsHistory = data;
+
+      for (let i = 0; i < 1; i++) {
+        this.lastConsultationDate = this.appointmentsHistory[i].date;
+        const Vistdetails = this.healthRecord.getVisitDetails(this.appointmentsHistory[i].id);
+        Vistdetails.subscribe((data) => {
+          this.keyNotes = data.keyNotes;
+          this.lastPhysicianEmail = data.physicianEmail;
+          this.bloodgroup = data.bloodGroup;
+        });
+      }
     });
   }
 
-
-  public get visits() {
+  public get data() {
     return this.myForm.controls;
   }
   patientDetails: PatientInfoDetails = new PatientInfoDetails();
   patientDataa: PatientInfoDetails = new PatientInfoDetails();
   onSubmitt() {
+    this.submitted = true;
+    let data = '';
+    for (let i = 0; i < this.myForm.value.allergies.length; i++) {
+      data = data + this.myForm.value.allergies[i] + ", ";
+    }
+    if (this.appointmentsHistory.length == 0)
+      this.bloodgroup = this.myForm.value.bloodgroup;
+    console.log(this.bloodgroup);
+    console.log(this.myForm.value);
     if (this.myForm.valid) {
-      this.patientDetails.allergyId = '1';
-      this.patientDetails.bloodGroup = 'O+';
+      this.patientDetails.allergies = data;
+      this.patientDetails.bloodGroup = this.myForm.value.bloodgroup;
       this.patientDetails.nurseEmail = this.nurseEmail;
       this.patientDetails.height = this.myForm.value.heightt;
       this.patientDetails.weight = this.myForm.value.weightt;
@@ -107,9 +142,6 @@ export class AddpatientinfoComponent {
       this.patientDetails.physicianEmail = this.phys;
       this.patientDetails.appointmentId = this.appointmentAppointmentsId;
       this.patientDetails.keyNotes = this.myForm.value.somethingData;
-
-
-
       this.selectedToppings = this.myForm.value
 
       for (let j = 0; j < this.selectedToppings.length; j++) {
@@ -119,7 +151,6 @@ export class AddpatientinfoComponent {
           }
         }
       }
-
       this.dialog.open(SubmitDialogComponent, {
         width: '500px',
         data: {

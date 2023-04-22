@@ -5,7 +5,21 @@ import { AppointmentDto } from 'src/app/model_classes/appointment';
 import { Patient } from 'src/app/model_classes/Patient';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.service';
+import { AgePipe } from 'src/app/Pipes/age.pipe';
+import { MatTableDataSource } from '@angular/material/table';
 
+
+export class Appointment {
+  id: any
+  patientId: any
+  patientName: any
+  patientEmail: any
+  date: any;
+  age: any;
+  gender: any;
+  contact: any;
+  ailment: any;
+}
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -15,166 +29,101 @@ import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.ser
 export class CardComponent implements OnInit {
   app: AppointmentDto[] = []
   patientData: Patient[] = []
-
+  dataSource: any;
+  selectDate: any;
   patientdetails: any;
   today: any;
-  public hell: string = '';
+  appointmentArr: Appointment[] = [];
+  selectedDate: any;
   status: String = "accepted";
   email: any;
-  constructor(private service: AppointmentService, private patient: PatientBasicInfoService) {
-    this.email = sessionStorage.getItem("PHYSICIAN_EMAIL");
-    // this.email = "deepak@gmail.com"
-    console.log(this.email + "fffffffffffffffffffffffffffffffffffffff")
-  }
-  // constructor(private PatientIdservice:PatientIdService){ }
-
-
   currentDate: DatePipe = new DatePipe('en-us');
   now: DatePipe = new DatePipe('en-us');
   tmrw: DatePipe = new DatePipe('en-us');
-
   tran: any;
   datePicker: any;
+  constructor(private service: AppointmentService, private patient: PatientBasicInfoService) {
+    this.email = sessionStorage.getItem("PHYSICIAN_EMAIL");
+  }
+
+
   public onDate(event: any): void {
     this.datePicker = event;
-    console.log(this.datePicker);
   }
-  selectDate: any
-  SelectBydate(SelectedDate: string) {
-    console.log(SelectedDate)
-    this.selectDate = SelectedDate
-    const SelectByDate = this.currentDate.transform(this.selectDate, 'dd-MMM-yyyy');
-    console.log(SelectByDate + "abcdefghi")
-    this.service.getAppointmentBYEmailAndDateAndStatus(this.email, SelectByDate, this.status).subscribe((data: AppointmentDto[]) => {
-      console.log(data);
-      this.app = data;
-      for (let i = 0; i < this.app.length; i++) {
-        console.log(this.app[i].patientId + 'inside data');
-        this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
-          this.patientData[i] = data1;
-          console.log(this.patientData[i]);
-        });
-      }
-    });
 
-  }
-  getCurrentDate(event: MatTabChangeEvent) {
-
-
-
+  ngOnInit(): void {
     var date = new Date();
-
     var transformdate = this.currentDate.transform(date, 'dd-MMM-yyyy')
+    this.selectedDate = transformdate;
+    this.getAppointment(this.email, transformdate, this.status);
+  }
+
+
+  SelectBydate(selectDate: string) {
+    const selectByDate = this.currentDate.transform(selectDate, 'dd-MMM-yyyy');
+    this.selectedDate = selectByDate;
+    this.getAppointment(this.email, selectByDate, this.status);
+  }
+
+
+  getCurrentDate(event: MatTabChangeEvent) {
+    var date = new Date();
+    var transformdate = this.currentDate.transform(date, 'dd-MMM-yyyy')
+    this.selectedDate = transformdate;
     const tab = event.tab.textLabel;
-    this.today = transformdate;
-    this.hell = this.today;
     if (tab == 'Today') {
-      console.log(this.today + "this.today");
-      this.service.getAppointmentBYEmailAndDateAndStatus(this.email, transformdate, this.status).subscribe((data: AppointmentDto[]) => {
-        console.log(data);
-        this.app = data;
-        for (let i = 0; i < this.app.length; i++) {
-          console.log(this.app[i].patientId + 'inside data');
-          this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
-            this.patientData[i] = data1;
-            console.log(data1.firstName);
-            console.log(this.patientData[i].firstName);
-          });
-        }
-      });
-      // return transformdate;
-      // let resp1=this.service.getPatientAcceptDetails(this.today);
-      // console.log(this.today);
-      // resp1.subscribe((data: any)=>this.patientdetails=data);
+      this.getAppointment(this.email, transformdate, this.status);
     }
     else if (tab == 'Tommorrow') {
       var date = new Date();
       const transform = this.currentDate.transform(date, 'dd-MMM-yyyy');
       const tmrw = new Date(date.setDate(date.getDate() + 1));
       const tmm = this.tmrw.transform(tmrw, 'dd-MMM-yyyy');
-      // let resp1=this.service.getAppointments(this.email,tmm,this.status);
-      // resp1.subscribe((data: any)=>this.patientdetails=data);
-      // console.log(tmm+"tommorow");
-
-
-      this.service.getAppointmentBYEmailAndDateAndStatus(this.email, tmm, this.status).subscribe((data: AppointmentDto[]) => {
-        console.log("sdfghjklkxxcvbnm,")
-        console.log(data);
-        this.app = data;
-        for (let i = 0; i < this.app.length; i++) {
-          console.log(this.app[i].patientId + 'inside data');
-          this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
-            this.patientData[i] = data1;
-            console.log(this.patientData[i]);
-          });
-        }
-      });
-      // return transformdate;
+      this.selectedDate = tmm;
+      this.getAppointment(this.email, tmm, this.status);
     }
 
 
 
   }
   setid: any
+
+  getAppointment(email: any, date: any, status: any) {
+    this.service.getAppointmentBYEmailAndDateAndStatus(email, date, status).subscribe((data: AppointmentDto[]) => {
+      this.app = data;
+      console.log("This is app data");
+      console.log(this.app)
+      for (let i = 0; i < this.app.length; i++) {
+        console.log(this.app[i].patientId + 'inside data');
+        this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
+          this.patientData[i] = data1;
+          this.appointmentArr[i] = new Appointment();
+          this.appointmentArr[i].id = this.app[i].id;
+          this.appointmentArr[i].patientId = this.patientData[i].patientId;
+          this.appointmentArr[i].patientName = this.patientData[i].title + " " + this.patientData[i].firstName + " " + this.patientData[i].lastName;
+          this.appointmentArr[i].patientEmail = this.patientData[i].email;
+          this.appointmentArr[i].date = this.app[i].date;
+          this.appointmentArr[i].age = new AgePipe().transform(this.patientData[i].dob);
+          this.appointmentArr[i].gender = this.patientData[i].gender;
+          this.appointmentArr[i].contact = this.patientData[i].contactNumber;
+          this.appointmentArr[i].ailment = this.app[i].reason;
+        });
+      }
+      this.dataSource = new MatTableDataSource<Appointment>(this.appointmentArr);
+    });
+  }
   setpaientId(id: any) {
     const pId = sessionStorage.setItem('Pid', id)
-    // console.log(id+"cardcomp");
-    // this.setid=id;
-    // this.Paservice.setPatientId(this.setid)
-    // console.log(this.setid+"this.dat")
-    // // this.setid=this.PatientIdservice.setPatientId(id)
-
   }
   setAppointmentId(Aid: any) {
     const Appointmentid = sessionStorage.setItem("AppointmentId", Aid)
   }
 
-  // abc(){
-  //   this.service.getAppointments(this.email,transformdate,this.status).subscribe((data: AppointmentDto[]) => {
-  //     console.log(data);
-  //     this.app = data;
-  //     for (let i = 0; i < this.app.length; i++) {
-  //       console.log(this.app[i].patientId + 'inside data');
-  //       this.service
-  //         .getpatientdetails(this.app[i].patientId)
-  //         .subscribe((data1: PatientDetails) => {
-  //           this.patientData[i] = data1;
-  //           console.log(this.patientData[i]);
-  //         });
-  //     }
-  //   });
-  // }
-  ngOnInit(): void {
-    var date = new Date();
 
-    var transformdate = this.currentDate.transform(date, 'dd-MMM-yyyy')
-
-    this.today = transformdate;
-    this.hell = this.today;
-
-    console.log(this.today + "this.today");
-    this.service.getAppointmentBYEmailAndDateAndStatus(this.email, transformdate, this.status).subscribe((data: AppointmentDto[]) => {
-      console.log(data);
-      this.app = data;
-      for (let i = 0; i < this.app.length; i++) {
-        console.log(this.app[i].patientId + 'inside data');
-        this.patient.getpatientdetails(this.app[i].patientId).subscribe((data1: Patient) => {
-          this.patientData[i] = data1;
-          console.log(data1.firstName);
-          console.log(this.patientData[i].firstName);
-        });
-      }
-    });
-    // return transformdate;
-    // let resp1=this.service.getPatientAcceptDetails(this.today);
-    // console.log(this.today);
-    // resp1.subscribe((data: any)=>this.patientdetails=data);
-
-  }
   applyFilter(event: Event) {
 
     const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
   }
 

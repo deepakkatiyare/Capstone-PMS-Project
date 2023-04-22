@@ -20,13 +20,13 @@ export class ViewdetailsComponent {
 
   testDetails: TestDetails[][] = [];
   prescriptionDetails: PrescriptionDetails[][] = [];
-
+  @ViewChild(MatPaginator) paginator: MatPaginator[] = [];
   displayedColumnsPrescription: string[] = ['progress', 'name', 'fruit'];
   displayedColumnsTest: string[] = ['progress', 'name', 'fruit'];
   dataSourceTest: any[] = [];
   dataSourcePrescription: any[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator[] = [];
+
   @ViewChild(MatSort) sort!: MatSort;
 
   toggleContent() {
@@ -38,7 +38,7 @@ export class ViewdetailsComponent {
   // let resp1=this.service.getAppointments(this.email,transformdate,this.status);
   // resp1.subscribe((data: any)=>this.patientdetails=data);
   patientdetail: any
-  patientVisitdetail: any
+  patientVisitdetail!: PatientInfoDetails;
   Vistdetails: any
   prescriptions: any[] = [];
   PatientsTests: any[] = [];
@@ -47,7 +47,10 @@ export class ViewdetailsComponent {
   healthRecordService!: PatientHealthRecordService;
   patientHistoryVisitdetail: any[] = []
   HistoryvisitId: any
-
+  bloodgroup: any
+  lastConsultationDate: any
+  lastPhysicianEmail: any
+  keyNotes: any;
   constructor(
 
     private patientdetails: PatientBasicInfoService,
@@ -59,68 +62,49 @@ export class ViewdetailsComponent {
     const Aid = sessionStorage.getItem('AppointmentId')
     const details = this.patientdetails.getpatientdetails(pId)
     details.subscribe((data) => this.patientdetail = data)
-    console.log(Aid);
     const Vistdetails = this.healthRecord.getVisitDetails(Aid);
     Vistdetails.subscribe((data) => {
       this.patientVisitdetail = data
-      // console.log(this.patientVisitdetail);
+      console.log("xxxxxxxxxxxxxxxxxxxxxxxx");
+      console.log(this.patientVisitdetail);
       this.visitID = this.patientVisitdetail.visitId;
-      // console.log(this.visitID + "cdcdc");
       sessionStorage.setItem("VisitId", this.patientVisitdetail.visitId)
     })
 
-    const appointmentHistory = this.appointment.getAppointmentByStatusAndId(pId, this.status, 0, 10)
+    const appointmentHistory = this.appointment.getAppointmentByStatusAndId(pId, this.status, 0, 20)
     appointmentHistory.subscribe((data) => {
       this.appointmentsHistory = data;
-      console.log(data);
-
 
       for (let i = 0; i < this.appointmentsHistory.length; i++) {
 
+        if (i == 0) {
+          this.lastConsultationDate = this.appointmentsHistory[i].date;
+        }
         const Vistdetails = this.healthRecord.getVisitDetails(this.appointmentsHistory[i].id);
         Vistdetails.subscribe((data) => {
-          console.log(data);
           this.patientHistoryVisitdetail[i] = data
+          if (i == 0) {
+            this.keyNotes = data.keyNotes;
+            this.lastPhysicianEmail = data.physicianEmail;
+            this.bloodgroup = data.bloodGroup;
+          }
           this.HistoryvisitId = this.patientHistoryVisitdetail[i].visitId;
-          console.log(this.HistoryvisitId + "HistoryvisitId");
-
-
           this.healthRecord.getPrescription(this.HistoryvisitId).subscribe((data) => {
-            this.prescriptions[i] = data;
-            console.log(data);
-            console.log("prescriptions");
+            this.prescriptions[i] = data
             this.dataSourcePrescription[i] = new MatTableDataSource<PrescriptionDetails>(data);
-            this.paginator = this.dataSourcePrescription[i].paginator
+            this.dataSourcePrescription[i].paginator = this.paginator[i];
 
           });
           this.healthRecord.getTests(this.HistoryvisitId).subscribe((data) => {
             this.PatientsTests[i] = data
-            console.log(data);
-            console.log(this.PatientsTests[i])
             this.dataSourceTest[i] = new MatTableDataSource<TestDetails>(data);
-            this.paginator = this.dataSourceTest[i].paginator
-
-
+            this.dataSourceTest[i].paginator = this.paginator[i];
           });
         });
 
 
       }
     })
-    // for (let i = 0; i < this.app.length; i++) {
-    //   console.log(this.app[i].patientId + 'inside data');
-    //   this.service.getpatientdetails(this.app[i].patientId).subscribe((data1: PatientDetails) => {
-    //       this.patientData[i] = data1;
-    //       console.log(this.patientData[i]);
-    //     });
-    // }
-
-
-
-    //  const prescriptionDetails=this.patientvist.getPrescriptionDetails(sessionStorage.getItem('VisitId'));
-    //  prescriptionDetails.subscribe((data)=>{this.prescriptions=data});
-    //  console.log(this.prescriptions+"dfgdfge");
-    //  console.log(this.prescriptions[0]+"prescription")
   }
 
 

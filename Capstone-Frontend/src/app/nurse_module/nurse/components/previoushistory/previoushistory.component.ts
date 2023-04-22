@@ -31,55 +31,50 @@ export class PrevioushistoryComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private service: PatientHealthRecordService, private appointmentList: AppointmentService) {
-    // Create 100 users
-    // const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-    // Assign the data to the data source for the table to render
-    // this.dataSource = new MatTableDataSource();
   }
 
   pId: any;
   ngOnInit(): void {
+
+
     this.pId = sessionStorage.getItem('arraydata');
-    this.service.healthRecords(this.pId).subscribe((visitDetails) => {
-      this.patientVisitDetails = visitDetails;
-      console.log(this.patientVisitDetails);
-      for (let i = 0; i < this.patientVisitDetails.length; i++) {
-        console.log(this.patientVisitDetails[i].visitId);
-        this.service
-          .getPrescription(this.patientVisitDetails[i].visitId)
-          .subscribe((prescriptionData) => {
-            this.prescriptionDetails[i] = prescriptionData;
-            console.log(prescriptionData);
-            console.log('prescription details');
-            console.log(this.prescriptionDetails[i]);
-            this.dataSourcePrescription[i] =
-              new MatTableDataSource<PrescriptionDetails>(
-                this.prescriptionDetails[i]
-              );
-            console.log(this.dataSourcePrescription);
-          });
-      }
-      for (let i = 0; i < this.patientVisitDetails.length; i++) {
-        this.service
-          .getTests(this.patientVisitDetails[i].visitId)
-          .subscribe((testData) => {
-            this.testDetails[i] = testData;
-            console.log('testdetails');
 
-            console.log(this.testDetails);
-
-            this.dataSourceTest[i] = new MatTableDataSource<TestDetails>(
-              this.testDetails[i]
-            );
-          });
-      }
-    });
-    console.log('in previous history');
-
-    this.appointmentList.getPreviousPatientAppointments(this.pId).subscribe((data) => {
+    this.appointmentList.getAppointmentByStatusAndId(this.pId, 'completed', 0, 30).subscribe((data) => {
       this.physicianData = data;
-      console.log(this.physicianData);
+      for (let i = 0; i < this.physicianData.length; i++) {
+        this.getVisitHistory(this.physicianData[i].id, i);
+      }
+
     });
+
+  }
+  getVisitHistory(appointmentId: any, index: number) {
+    this.service.getVisitDetails
+      (appointmentId).subscribe((visitDetails) => {
+        this.patientVisitDetails[index] = visitDetails;
+        this.service
+          .getPrescription(this.patientVisitDetails[index].visitId)
+          .subscribe((prescriptionData) => {
+            this.prescriptionDetails[index] = prescriptionData;
+            this.dataSourcePrescription[index] =
+              new MatTableDataSource<PrescriptionDetails>(
+                this.prescriptionDetails[index]
+              );
+            console.log("Prescription Details");
+          });
+        this.service
+          .getTests(this.patientVisitDetails[index].visitId)
+          .subscribe((testData) => {
+            this.testDetails[index] = testData;
+            this.dataSourceTest[index] = new MatTableDataSource<TestDetails>(
+              this.testDetails[index]
+            );
+            console.log("Test Details");
+            console.log(this.testDetails[index]);
+          });
+      });
+
   }
 }
+
 

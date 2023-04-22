@@ -47,6 +47,10 @@ export class PatientHealthRecordService {
     );
   }
 
+  public getNurseCount() {
+    return this.http.get("http://localhost:9007/api/v1/nurse/count");
+  }
+
 
   // to get test details
 

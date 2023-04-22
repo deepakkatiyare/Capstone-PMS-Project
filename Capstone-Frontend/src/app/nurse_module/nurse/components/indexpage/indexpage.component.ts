@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./indexpage.component.css']
 })
 export class IndexpageComponent {
-  width = window.innerWidth;
-  height = window.innerHeight;
 }

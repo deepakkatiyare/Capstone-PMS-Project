@@ -1,22 +1,13 @@
-mat-card {
-  width: 80%;
-  margin: 50px auto;
+h1,
+p {
+  text-align: center;
+  font-weight: 400;
 }
 
-mat-card-header {
-  background-color: #008cba;
-  color: #fff;
+h1 {
+  padding-top: 50px;
 }
 
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-}
-
-mat-form-field {
-  margin-bottom: 20px;
-}
-
-button[type="submit"] {
-  align-self: flex-end;
+p {
+  padding-bottom: 50px;
 }
