@@ -6,31 +6,51 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 
 @Entity
-@Table(name="allergy")
+@Table(name="Allergy")
 public class Allergy {
-	@Column(name="allergy_id")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int allergyId;
-	
-	@Column(name="allergy_name")
-	private String allergyName;
-	
-	@Column(name="allergy_notes")
-	private String allergyNotes;
-	
-
+@Column(name="Allergy_id")
+@Id
+@GeneratedValue(strategy=GenerationType.AUTO)
+	public int allergyId;
+@Column(name="Allergy_name")
+	public String allergyName;
+@Column(name="Allergy_description")
+	public String allergyDescription;
+public int getAllergyId() {
+	return allergyId;
+}
+public void setAllergyId(int allergyId) {
+	this.allergyId = allergyId;
+}
+public String getAllergyName() {
+	return allergyName;
+}
+public void setAllergyName(String allergyName) {
+	this.allergyName = allergyName;
+}
+public String getAllergyDescription() {
+	return allergyDescription;
+}
+public void setAllergyDescription(String allergyDescription) {
+	this.allergyDescription = allergyDescription;
+}
+public Allergy(int allergyId, String allergyName, String allergyDescription) {
+	super();
+	this.allergyId = allergyId;
+	this.allergyName = allergyName;
+	this.allergyDescription = allergyDescription;
+}
+public Allergy() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+@Override
+public String toString() {
+	return "Allergy [allergyId=" + allergyId + ", allergyName=" + allergyName + ", allergyDescription="
+			+ allergyDescription + ", getAllergyId()=" + getAllergyId() + ", getAllergyName()=" + getAllergyName()
+			+ ", getAllergyDescription()=" + getAllergyDescription() + ", getClass()=" + getClass() + ", hashCode()="
+			+ hashCode() + ", toString()=" + super.toString() + "]";
+}
 }

@@ -19,7 +19,11 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public PatientDto loginService(String email, String password) {
-		Patient patient=patientRepository.findPatientByEmailAndPassword(email,password);
+		Patient patient=patientRepository.findByEmailAndPassword(email,password);
 		return modelMapper.map(patient, PatientDto.class);
+	}	
+	@Override
+	public void updatepassword(String email,String password) {
+		patientRepository.updatePassword(password,email);
 	}
 }

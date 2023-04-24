@@ -1,5 +1,7 @@
 package com.revature.entity;
 
+import com.revature.entity.dto.PatientDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 
 @Entity
 @Table(name = "patient")
@@ -26,8 +30,6 @@ public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int patientId;
-	
-	
 	@Column(name="email",nullable=false,unique=true)
 	private String email;
 	
@@ -54,6 +56,5 @@ public class Patient {
 
 	@Column(name="address")
 	private String address;
-	
 	
 }

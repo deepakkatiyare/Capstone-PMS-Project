@@ -24,6 +24,7 @@ public class PatientInfoServiceImpl implements PatientInfoService{
 	@Override
 	public List<PatientDto> getAllPatients() {
 		List<Patient> patients=patientRepository.findAll();
+//		System.out.println("getting"+patients);
 		return patients.stream().map(patient -> modelMapper.map(patient, PatientDto.class))
 				.collect(Collectors.toList());
 	}
@@ -37,16 +38,16 @@ public class PatientInfoServiceImpl implements PatientInfoService{
 	public PatientDto updatePatientById(int id,PatientDto patientDto) {
 		Patient patient=patientRepository.findById(id).get();
 		patient.setAddress(patientDto.getAddress());
-		patient.setContactNumber(patientDto.getContactNumber());
-		patient.setDob(patientDto.getDob());
+		patient.setContactNumber(patientDto.getContactNumber());	
 		patient.setEmail(patientDto.getEmail());
 		patient.setFirstName(patientDto.getFirstName());
-		patient.setGender(patientDto.getGender());
 		patient.setLastName(patientDto.getLastName());
-		patient.setPassword(patientDto.getPassword());
-		patient.setTitle(patientDto.getTitle());
 		patientRepository.saveAndFlush(patient);
 		return modelMapper.map(patient, PatientDto.class);
+	}
+
+	public long getCount(){
+		return patientRepository.count();
 	}
 
 }
