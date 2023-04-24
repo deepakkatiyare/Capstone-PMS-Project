@@ -49,13 +49,19 @@ export class AppointmentsComponent implements OnInit {
   ngOnInit(): void {
     var date = new Date();
     this.todayDate = new DatePipe('en-us').transform(date, 'dd-MMM-yyyy');
+
+
+    console.log("Outside Outside Outside");
+    if (this.eventEmitter.getAppointmentEvent() != null) {
+      this.eventEmitter.getAppointmentEvent().subscribe(() => {
+        console.log("Inside inside inside");
+        this.appointmentArr = [];
+        this.getAcceptanceCount();
+        this.getAppointments(this.pageIndex, this.pageSize);
+      })
+    }
     this.getAcceptanceCount();
     this.getAppointments(this.pageIndex, this.pageSize);
-    this.event = this.eventEmitter.getAppointmentEvent();
-    this.event.subscribe(() => {
-      this.getAcceptanceCount();
-      this.getAppointments(this.pageIndex, this.pageSize);
-    })
 
   }
   getAcceptanceCount() {

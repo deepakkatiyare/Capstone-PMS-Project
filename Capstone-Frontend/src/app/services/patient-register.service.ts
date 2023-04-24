@@ -13,8 +13,8 @@ export class PatientRegisterService {
   private loginUrl: string
   constructor(private http: HttpClient) {
 
-    this.patientRegisterUrl = "http://localhost:9001/authentication/patient/register";
-    this.loginUrl = "http://localhost:9001/authentication/patient/login";
+    this.patientRegisterUrl = "https://ymtwkqmeqf.execute-api.us-west-2.amazonaws.com/aprod/authentication-service/patient/register";
+    this.loginUrl = "https://ymtwkqmeqf.execute-api.us-west-2.amazonaws.com/aprod/authentication-service/patient/login";
   }
 
   public registerPatient(patient: Patient): Observable<Patient> {
@@ -32,16 +32,14 @@ export class PatientRegisterService {
     return this.http.post<Patient>(this.loginUrl, queryParams);
   }
 
-
-  // public checkemail(): Observable<Patient> {
-  //   return this.http.get<Patient>("http://localhost:9006/api/v1/patient")
-  // }
-
   public forgotpassword(email: any) {
-    return this.http.post("http://localhost:9001/authentication/sendemail", email)
+    return this.http.post("https://ymtwkqmeqf.execute-api.us-west-2.amazonaws.com/aprod/authentication-service/sendemail", email)
   }
 
   public updatePatientPassword(email: any, password: any) {
-    return this.http.put("http://localhost:9001/authentication/patient/" + email + "/" + password, '')
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("email", email);
+    queryParams = queryParams.append("password", password);
+    return this.http.put("https://ymtwkqmeqf.execute-api.us-west-2.amazonaws.com/aprod/authentication-service/patient", queryParams);
   }
 }

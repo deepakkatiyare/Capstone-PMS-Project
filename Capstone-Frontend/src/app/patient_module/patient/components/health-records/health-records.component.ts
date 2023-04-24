@@ -90,26 +90,27 @@ export class HealthRecordsComponent {
   }
   getAcceptedAppointments(page: any, size: any) {
     this.savedAppointment.getAppointmentByStatusAndId(this.patientId, 'completed', page, size).subscribe(result => {
-      this.acceptedAppointment = result;
-      if (this.acceptedAppointment.length == 0)
+      if (result == null)
         this.nodata = true;
       else {
         this.nodata = false;
-      }
-      for (let i = 0; i < result.length; i++) {
-        this.savedVisit.getVisitDetails(this.acceptedAppointment[i].id).subscribe(data => {
-          this.visits[i] = data;
-        })
+        this.acceptedAppointment = result;
+        for (let i = 0; i < result.length; i++) {
+          this.savedVisit.getVisitDetails(this.acceptedAppointment[i].id).subscribe(data => {
+            this.visits[i] = data;
+          })
+        }
       }
       this.acceptedDataSource = new MatTableDataSource<PatientInfoDetails>(this.visits)
     })
   }
   getPendingAppointments(page: any, size: any) {
     this.savedAppointment.getAppointmentByStatusAndId(this.patientId, "pending", page, size).subscribe(result => {
-      this.pendingAppointment = result;
-      this.pendingDataSource = new MatTableDataSource<AppointmentDto>(result);
-      console.log("pending appointment");
-      console.log(this.pendingAppointment);
+
+      if (result != null) {
+        this.pendingAppointment = result;
+      }
+      this.pendingDataSource = new MatTableDataSource<AppointmentDto>(this.pendingAppointment);
     })
   }
 

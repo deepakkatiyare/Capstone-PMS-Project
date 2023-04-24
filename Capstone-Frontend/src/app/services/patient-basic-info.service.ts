@@ -10,7 +10,7 @@ export class PatientBasicInfoService {
 
   patientsUrl: string = "";
   constructor(private http: HttpClient) {
-    this.patientsUrl = 'http://localhost:9006/api/v1/patient';
+    this.patientsUrl = 'https://tzttfmbuyf.execute-api.us-west-2.amazonaws.com/patientinfo-prod/patient-info/patient';
   }
 
   public getPatients(): Observable<Patient[]> {
@@ -18,13 +18,13 @@ export class PatientBasicInfoService {
   }
 
   public getpatientdetails(id: any): Observable<Patient> {
-    return this.http.get<Patient>("http://localhost:9006/api/v1/patient/" + id)
+    return this.http.get<Patient>("https://tzttfmbuyf.execute-api.us-west-2.amazonaws.com/patientinfo-prod/patient-info/patient/" + id)
   }
 
-  public updatePatientById(id: any): Observable<Patient> {
-    return this.http.put<Patient>("http://localhost:9006/api/v1/patient/" + id, "");
+  public updatePatientById(id: any, patientData: Patient): Observable<Patient> {
+    return this.http.put<Patient>("https://tzttfmbuyf.execute-api.us-west-2.amazonaws.com/patientinfo-prod/patient-info/patient/" + id, patientData);
   }
   public getCount() {
-    return this.http.get("http://localhost:9006/api/v1/patient/count");
+    return this.http.get("https://tzttfmbuyf.execute-api.us-west-2.amazonaws.com/patientinfo-prod/patient-info/patient/count");
   }
 }

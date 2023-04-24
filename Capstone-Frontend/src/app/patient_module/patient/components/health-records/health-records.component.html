@@ -19,7 +19,11 @@
             </mat-label><br><br>
         </div>
         <div>
-            <mat-label><b>BloodGroup:- </b>{{visits[0].bloodGroup}}</mat-label><br><br>
+            <mat-label>
+                <b *ngIf="nodata">BloodGroup : NA</b>
+                <b *ngIf="!nodata">BloodGroup : </b>
+                <span *ngIf="!nodata">{{visits[0].bloodGroup}}</span>
+            </mat-label><br><br>
             <mat-label>
                 <b *ngIf="nodata">Last Consultation On: NA</b>
                 <b *ngIf="!nodata">Last Consultation On: </b>
@@ -85,7 +89,7 @@
                                     routerLink="/patient/pdfView" style="height: 20%;
                                  margin-right: -33px; "><mat-icon matTooltip="View PDF"><span
                                             class="material-icons-outlined">
-                                            download_for_offline
+                                            visibility
                                         </span></mat-icon></button>
                                 <mat-card-title style="color:green">Status :
                                     {{acceptedAppointment[i].acceptance}}</mat-card-title><br />

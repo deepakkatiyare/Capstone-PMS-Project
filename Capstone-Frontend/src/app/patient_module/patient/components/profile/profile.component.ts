@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetpasswordComponent } from '../resetpassword/resetpassword.component';
+import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.service';
+import { Patient } from 'src/app/model_classes/Patient';
+import { UpdateProfileComponent } from '../update-profile/update-profile.component';
 
 @Component({
   selector: 'app-profile',
@@ -9,19 +12,16 @@ import { ResetpasswordComponent } from '../resetpassword/resetpassword.component
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
+  public patientId: any;
+  public patient!: Patient;
+  constructor(public dialog: MatDialog, public patientService: PatientBasicInfoService) {
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-  hide = true;
-
-  constructor(private dialog: MatDialog) { }
-  openDialog2() {
-    this.dialog.open(ResetpasswordComponent);
+  ngOnInit() {
+    this.patientId = sessionStorage.getItem("PATIENT_ID");
+    this.patientService.getpatientdetails(this.patientId).subscribe(data => this.patient = data);
+  }
+  openDialog() {
+    this.dialog.open(UpdateProfileComponent)
   }
 }

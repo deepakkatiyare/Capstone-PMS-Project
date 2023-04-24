@@ -14,41 +14,41 @@ export class PatientHealthRecordService {
   constructor(private http: HttpClient) { }
 
   public healthRecords(patientId: number): Observable<PatientInfoDetails[]> {
-    return this.http.get<PatientInfoDetails[]>('http://localhost:9007/api/v1/patient/' + patientId + '/visits');
+    return this.http.get<PatientInfoDetails[]>('https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/patient/' + patientId + '/visits');
   }
   public visitDetails(visitId: number): Observable<PatientInfoDetails> {
-    return this.http.get<PatientInfoDetails>('http://localhost:9007/api/v1/visitdetail/' + visitId);
+    return this.http.get<PatientInfoDetails>('https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visitdetails/' + visitId);
   }
 
   public postPrescription(prescription: any) {
-    return this.http.post("http://localhost:9007/api/v1/visitdetails/prescription", prescription)
+    return this.http.post("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visitdetails/prescription", prescription)
   }
   public postTest(Test: any) {
     console.log("tanu")
     console.log(Test);
-    return this.http.post("http://localhost:9007/api/v1/visitdetails/tests", Test)
+    return this.http.post("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visitdetails/tests", Test)
   }
   public getTests(Id: any): Observable<TestDetails[]> {
-    return this.http.get<TestDetails[]>("http://localhost:9007/api/v1/tests/" + Id);
+    return this.http.get<TestDetails[]>("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/tests/" + Id);
   }
 
   public getNurses() {
-    return this.http.get("http://localhost:9007/api/v1/nurse");
+    return this.http.get("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/nurse");
   }
   public getPrescription(id: any): Observable<PrescriptionDetails[]> {
-    return this.http.get<PrescriptionDetails[]>("http://localhost:9007/api/v1/prescriptions/" + id);
+    return this.http.get<PrescriptionDetails[]>("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/prescriptions/" + id);
   }
 
   public getVisitDetails(
     appointmentId: any
   ): Observable<PatientInfoDetails> {
     return this.http.get<PatientInfoDetails>(
-      'http://localhost:9007/api/v1/visit/' + appointmentId
+      'https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visit/' + appointmentId
     );
   }
 
   public getNurseCount() {
-    return this.http.get("http://localhost:9007/api/v1/nurse/count");
+    return this.http.get("https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/nurse/count");
   }
 
 
@@ -56,7 +56,7 @@ export class PatientHealthRecordService {
 
   public getTestDetails(visitId: any): Observable<TestDetails[]> {
     return this.http.get<TestDetails[]>(
-      'http://localhost:9007/api/v1/visitdetails/' + visitId + '/tests'
+      'https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visitdetails/' + visitId + '/tests'
     );
   }
 
@@ -65,7 +65,7 @@ export class PatientHealthRecordService {
     visitId: any
   ): Observable<PrescriptionDetails[]> {
     return this.http.get<PrescriptionDetails[]>(
-      'http://localhost:9007/api/v1/visitdetails/' + visitId + '/prescription'
+      'https://lc5w14ws23.execute-api.us-west-2.amazonaws.com/healthrecord-prod/health-record/visitdetails/' + visitId + '/prescription'
     );
   }
 }

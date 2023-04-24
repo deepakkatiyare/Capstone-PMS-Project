@@ -1,6 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { LowerCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { PatientBasicInfoService } from 'src/app/services/patient-basic-info.service';
 import { PatientRegisterService } from 'src/app/services/patient-register.service';
@@ -21,15 +23,13 @@ import { PatientRegisterService } from 'src/app/services/patient-register.servic
 export class ForgotpasswordComponent implements OnInit {
 
 
-  email!: string;
+  patientEmail!: string;
   newPassword!: string;
   retypePassword!: string;
   showOTP: boolean = false;
   showNewPassword: boolean = false;
-  showIncorrectOTP: boolean = false;
+  showResendOTP: boolean = false;
   showPasswordMismatch: boolean = false;
-  VerifyEmail: boolean = false;
-
 
   emailbutton: boolean = true
   verifybutton: boolean = true
@@ -49,7 +49,7 @@ export class ForgotpasswordComponent implements OnInit {
   submitted = false;
   otpVerify: any;
   password: any
-  constructor(private router: Router, private service: PatientRegisterService, private patients: PatientBasicInfoService) { }
+  constructor(private _snackBar: MatSnackBar, private router: Router, private service: PatientRegisterService, private patients: PatientBasicInfoService) { }
 
   //  
   ngOnInit(): void {
@@ -77,11 +77,13 @@ export class ForgotpasswordComponent implements OnInit {
   sendOTP() {
     this.submitted = true;
     if (this.forgotPassword.valid) {
+
       this.patients.getPatients().subscribe((data: any) => {
         this.patiets = data
-        this.emailExists = this.patiets.some(user => this.forgotPassword.value.userEmail === user.email)
+        this.patientEmail = this.forgotPassword.value.userEmail
+        this.emailExists = this.patiets.some(user => new LowerCasePipe().transform(this.patientEmail) === user.email)
         if (this.emailExists) {
-          this.VerifyEmail = false
+          this.openSnackBar('OTP sent on registered email!');
           this.showOTP = true;
           const min = 100000; // 6 digit number starting from 100000
           const max = 999999; // 6 digit number ending at 99999
@@ -89,28 +91,44 @@ export class ForgotpasswordComponent implements OnInit {
 
           sessionStorage.setItem("ResetOtp", this.randomNum)
           const emailData = {
-            toMail: [this.forgotPassword.value.userEmail],
+            toMail: [this.patientEmail],
             subject: 'Forgot password',
             message: 'enter otp to reset password  ' + this.randomNum
           };
           this.service.forgotpassword(emailData).subscribe()
           this.emailbutton = false
         } else {
-          this.VerifyEmail = true
+          this.errorSnackBar('Email does not exist!');
         }
       });
     }
   }
+  resendOtp() {
+    this.openSnackBar('OTP resent on registered email!');
 
+    this.showOTP = true;
+    const min = 100000; // 6 digit number starting from 100000
+    const max = 999999; // 6 digit number ending at 99999
+    this.randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    sessionStorage.setItem("ResetOtp", this.randomNum)
+    const emailData = {
+      toMail: [this.patientEmail],
+      subject: 'Forgot password',
+      message: 'enter otp to reset password  ' + this.randomNum
+    };
+    this.service.forgotpassword(emailData).subscribe()
+  }
   verifyOTP() {
     this.submitted = true;
     if (this.otpVerify.valid) {
       if (sessionStorage.getItem("ResetOtp") === this.otpVerify.value.otp) {
-        this.showIncorrectOTP = false;
         this.showNewPassword = true;
         this.showOTP = false
+        this.showResendOTP = false;
       } else {
-        this.showIncorrectOTP = true;
+        this.errorSnackBar('Wrong Otp entered!');
+        this.showResendOTP = true;
       }
     }
   }
@@ -118,15 +136,30 @@ export class ForgotpasswordComponent implements OnInit {
   resetPassword() {
     this.submitted = true;
     if (this.password.valid) {
-      console.log(this.password.value.newpassword)
-      console.log(this.password.value.confirmpassword);
       if (this.password.value.newpassword === this.password.value.confirmpassword) {
-        this.showPasswordMismatch = false;
         this.service.updatePatientPassword(this.forgotPassword.value.userEmail, this.password.value.newpassword).subscribe()
+        this.openSnackBar('Successfully Updated Password!');
         this.router.navigateByUrl('/login');
       } else {
-        this.showPasswordMismatch = true;
+        this.errorSnackBar('Password Not Matched!');
       }
     }
+  }
+  openSnackBar(value: string) {
+    this._snackBar.open(value, 'Close', {
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom',
+      duration: 3000,
+      panelClass: ['snackbar']
+    });
+  }
+
+  errorSnackBar(value: string) {
+    this._snackBar.open(value, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom',
+      panelClass: ['red_snackbar']
+    });
   }
 }

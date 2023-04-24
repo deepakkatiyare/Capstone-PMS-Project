@@ -40,6 +40,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PipeModule } from 'src/app/services/pipe/pipe.module';
 import { LogoutDialogComponent } from './components/dialog-pop/dialog-pop.component';
 import { PdfviewComponent } from './components/pdfview/pdfview.component';
+import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PdfviewComponent } from './components/pdfview/pdfview.component';
     SidebarComponent,
     TestdetailsComponent,
     PrescriptionComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     FormsModule,

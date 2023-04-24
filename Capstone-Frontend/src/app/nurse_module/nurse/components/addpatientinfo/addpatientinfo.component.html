@@ -19,7 +19,7 @@
         <ng-container *ngIf="appointmentsHistory.length!=0">
             <div class="rightcard" style="padding: 20px">
                 <h3>Previous Health History</h3>
-                <p><span style="font-weight: 500">BloodGroup : </span>{{bloodgroup}}</p>
+                <p><span style="font-weight: 500">BloodGroup : </span>{{selectedBlood}}</p>
                 <p>
                     <span style="font-weight: 500">Last Consultation Date: </span>{{lastConsultationDate}}
                 </p>
@@ -164,7 +164,6 @@
                     <span *ngIf="data['allergies'].errors!['required']">Allergies is mandatory</span>
                 </mat-error>
             </mat-form-field>
-
         </div>
         <div>
             <ng-container *ngIf="appointmentsHistory.length==0">

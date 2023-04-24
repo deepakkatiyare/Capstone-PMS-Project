@@ -37,10 +37,12 @@ export class SubmitDialogComponent {
     this.service.sendPatientInfo(this.data, this.patientIdd).subscribe(result => {
       if (result != null) {
         this.openSnackBar();
-        this.service.updateStatusById(this.dataa.appointmentId, "accepted").subscribe();
-        this.appointmentEvent.emit();
-        this.event.setAppointmentEvent(this.appointmentEvent);
-        this.route.navigateByUrl('/nurse/appointments',);
+        this.service.updateStatusById(this.dataa.appointmentId, "accepted").subscribe(() => {
+          this.event.setAppointmentEvent(this.appointmentEvent);
+          this.appointmentEvent.emit();
+          this.route.navigateByUrl('/nurse/appointments',);
+        });
+
       }
     });
   }

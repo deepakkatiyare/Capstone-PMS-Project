@@ -9,7 +9,7 @@ import { PatientRegisterService } from 'src/app/services/patient-register.servic
 import { RegisterDialogComponent } from '../dialog-pop/dialog-pop.component';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { DatePipe } from '@angular/common';
+import { DatePipe, LowerCasePipe, UpperCasePipe } from '@angular/common';
 @Component({
   selector: 'app-patient-regi',
   templateUrl: './patient-regi.component.html',
@@ -31,6 +31,8 @@ export class PatientRegiComponent {
   hide0 = true;
   currentDate!: Date;
   check = false;
+  passwordFormControl: any;
+  confirmPasswordFormControl: any;
   patients: Patient[] = [];
   constructor(private formBuilder: FormBuilder, private matDialog: MatDialog, private _snackBar: MatSnackBar, private patientInfo: PatientBasicInfoService, private patientRegister: PatientRegisterService, private router: Router) {
     this.patient = new Patient();
@@ -38,7 +40,7 @@ export class PatientRegiComponent {
   ngOnInit() {
     // this.currentDate = new DatePipe('en-us');
     this.currentDate = new Date();
-    this.myForm = new FormGroup({
+    this.myForm = this.formBuilder.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -49,44 +51,34 @@ export class PatientRegiComponent {
       confirmpassword: new FormControl('', [Validators.required]),
       title: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-    }
+    },
+      { validator: this.passwordMatchValidator }
     );
-
+    this.passwordFormControl = this.myForm.get('password');
+    this.confirmPasswordFormControl = this.myForm.get('confirmpassword');
     this.patientInfo.getPatients().subscribe(data => {
       this.patients = data;
     });
   }
-  matchPassword(formGroup: FormGroup) {
-    const { value: password } = formGroup.value.password;
-    const { value: confirmpassword } = formGroup.value.confirmpassword;
-    return password === confirmpassword ? null : { passwordNotMatch: true };
-  }
-  // mustMatch(controlName: string, matchingControlName: string) {
-  //   return (formGroup: FormGroup) => {
-  //     const control = formGroup.controls[controlName];
-  //     const matchingControl = formGroup.controls[matchingControlName];
-  //     if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
-  //       return
-  //     }
-  //     if (control.value !== matchingControl.value) {
-  //       matchingControl.setErrors({ mustMatch: true })
-  //     }
-  //     else {
-  //       matchingControl.setErrors(null);
-  //     }
-  //   }
-  // }
   public get register() {
     return this.myForm.controls;
   }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.controls['password'];
+    const confirmPassword = formGroup.controls['confirmpassword'];
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ matchPassword: true });
+    } else {
+      confirmPassword.setErrors(null);
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
-    console.log(this.patients);
-    console.log(this.myForm.value);
     if (this.myForm.valid) {
       if (this.patients.length != 0) {
         for (var p of this.patients) {
-          console.log(this.myForm.value.email + " " + p.email)
           if (p.email == this.myForm.value.email) {
             this.check = true;
             break;
@@ -101,8 +93,9 @@ export class PatientRegiComponent {
           //register
           this.myForm.value.dob = new CustomDatePipePipe('en-us').transform(this.myForm.value.dob, 'dd-MMM-yyyy');
           console.log("post registration")
+          this.myForm.value.email = new LowerCasePipe().transform(this.myForm.value.email);
+          console.log(this.myForm.value);
           this.patient = this.myForm.value;
-          console.log(this.patient)
           this.patientRegister.registerPatient(this.patient).subscribe((result) => {
             if (result != null) {
               console.log("dddddddddddddddddd");
@@ -115,8 +108,6 @@ export class PatientRegiComponent {
         }
       }
       else {
-        console.log("register");
-        //register
         this.myForm.value.dob = new CustomDatePipePipe('en-us').transform(this.myForm.value.dob, 'dd-MMM-yyyy');
         console.log("post registration")
         this.patient = this.myForm.value;
@@ -151,6 +142,9 @@ export class PatientRegiComponent {
   }
   openSnackBar() {
     this._snackBar.open('Please choose another email', 'Close', {
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom',
+      panelClass: ['red_snackbar'],
       duration: 3000
     });
 

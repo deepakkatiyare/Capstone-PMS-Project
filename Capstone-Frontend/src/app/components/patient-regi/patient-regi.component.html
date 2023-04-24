@@ -114,7 +114,9 @@
                     <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error
                         *ngIf="(register.confirmpassword.invalid &&  register.confirmpassword.touched)||(register.confirmpassword.invalid &&  submitted)">
-                        <span *ngIf="register.confirmpassword.errors.required">password is required</span>
+                        <span *ngIf="confirmPasswordFormControl.errors?.['required']">password is required</span>
+                        <span *ngIf="confirmPasswordFormControl.errors?.['matchPassword']">Confirm Password not matched!
+                        </span>
                     </mat-error>
                 </mat-form-field>
             </div>

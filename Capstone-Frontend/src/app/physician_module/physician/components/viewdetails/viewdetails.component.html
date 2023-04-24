@@ -19,7 +19,6 @@
         </div>
         <ng-container *ngIf="appointmentsHistory.length!=0">
             <div>
-
                 <p><span style="font-weight: 500">BloodGroup : </span>{{bloodgroup}}</p>
                 <p>
                     <span style="font-weight: 500">Last Consultation Date: </span>{{lastConsultationDate}}
@@ -237,7 +236,7 @@
     </table>
     <!-- <button class="submitbtn" (click)="testsubmit(newTest)">Submit</button> -->
     <button class="done" (click)="submitTestAndPrescription(id,newTest,newMedicine)" mat-stroked-button
-        style="border: 1px solid #2D033B;z-index: 99;" routerLink="/physician/appointments">
+        style="border: 1px solid #2D033B;z-index: 99;">
         submit
     </button>
 
@@ -272,26 +271,26 @@
                                 <span style="font-weight: 700">BloodPressure :
                                 </span>{{patientHistoryVisitdetail[i].bpSystolic
                                 }}/{{
-                                patientHistoryVisitdetail[i].bpDiastolic}}
+                                patientHistoryVisitdetail[i].bpDiastolic}} (Systolic/Diastolic)
                             </p>
                             <p>
                                 <span style="font-weight: 700">height :</span>
-                                {{patientHistoryVisitdetail[i].height }}
+                                {{patientHistoryVisitdetail[i].height }} cm
                             </p>
                             <p>
                                 <span style="font-weight: 700">Weight
                                     :</span>{{patientHistoryVisitdetail[i].weight
-                                }}
+                                }} kg
                             </p>
                             <p>
                                 <span style="font-weight: 700">BodyTemperature :</span>
-                                {{ patientHistoryVisitdetail[i].bodyTemparature }}
+                                {{ patientHistoryVisitdetail[i].bodyTemparature }} Fahrenheit
                             </p>
                         </div>
                         <div>
                             <p>
                                 <span style="font-weight: 700">Respiration Rate :</span>
-                                {{ patientHistoryVisitdetail[i].respirationRate }}
+                                {{ patientHistoryVisitdetail[i].respirationRate }} Breaths per minute
                             </p>
                             <p>
                                 <span style="font-weight: 700">Allergies

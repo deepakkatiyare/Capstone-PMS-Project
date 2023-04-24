@@ -7,6 +7,8 @@ import { PatientRegisterService } from 'src/app/services/patient-register.servic
 import { RegisterDialogComponent } from '../dialog-pop/dialog-pop.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/authservice.service';
+import { catchError, throwError } from 'rxjs';
+import { LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -38,18 +40,23 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      this.patientRegister.loginPatient(this.loginForm.value.email, this.loginForm.value.password).subscribe(result => {
-        if (result != null) {
-          sessionStorage.clear();
-          this.loginService.login(this.loginForm.value.email);
-          sessionStorage.setItem("PATIENT_ID", result.patientId);
-          sessionStorage.setItem("PATIENT_OBJ", JSON.stringify(result));
-          this.router.navigateByUrl("/patient/bookappointment")
-        }
-        else {
-          this.loginDialog()
-        }
-      })
+      this.patientRegister.loginPatient(new LowerCasePipe().transform(this.loginForm.value.email), this.loginForm.value.password)
+        .pipe(
+          catchError(error => {
+            console.log('An error occurred:', error);
+            this.loginDialog();
+            return throwError(error);
+          })
+        )
+        .subscribe(result => {
+          if (result != null) {
+            sessionStorage.clear();
+            this.loginService.login(new LowerCasePipe().transform(this.loginForm.value.email));
+            sessionStorage.setItem("PATIENT_ID", result.patientId);
+            sessionStorage.setItem("PATIENT_OBJ", JSON.stringify(result));
+            this.router.navigateByUrl("/patient/bookappointment")
+          }
+        })
     }
   }
 

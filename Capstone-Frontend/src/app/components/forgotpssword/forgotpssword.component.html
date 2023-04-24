@@ -13,9 +13,6 @@
                             <span *ngIf="forgot.userEmail.errors.email">invalid email!</span>
                         </mat-error>
                     </mat-form-field>
-                    <div *ngIf="VerifyEmail" style="color:red;margin-top:0;">
-                        Email is not present
-                    </div>
 
                     <div class="button">
                         <button type="submit" mat-raised-button *ngIf="emailbutton"
@@ -36,7 +33,6 @@
                                 <mat-error
                                     *ngIf="(getOtp.otp.invalid &&  getOtp.otp.touched)||(getOtp.otp.invalid &&  submitted)">
                                     <span *ngIf="getOtp.otp.errors.required">Input field is empty</span>
-                                    <span *ngIf="showIncorrectOTP">Incorrect OTP</span>
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -47,6 +43,15 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- **************** -->
+                <div *ngIf="showResendOTP">
+                    <div style="margin:10px 0 10px 0">
+                        <button type="submit" mat-raised-button *ngIf="verifybutton" (click)="resendOtp()"
+                            style="background-color: purple;color: white;width:100%;">Resend OTP</button>
+                    </div>
+                </div>
+                <!-- ****************** -->
                 <div *ngIf="showNewPassword">
                     <form [formGroup]="password" (ngSubmit)="resetPassword()">
                         <!-- <div>

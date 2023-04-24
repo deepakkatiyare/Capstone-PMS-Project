@@ -22,19 +22,18 @@ import { AppointmentDto } from 'src/app/model_classes/appointment';
 })
 export class AddpatientinfoComponent {
   [x: string]: any;
-  public myForm!: FormGroup;
+  public myForm: any;
   constructor(
     public dialog: MatDialog,
     public patientService: PatientBasicInfoService,
     private allergyService: AllergyService,
     private healthRecord: PatientHealthRecordService,
     private appointment: AppointmentService
-  ) { }
-
-
+  ) {
+  }
   selectedItem: any;
   nurseEmail = sessionStorage.getItem("NURSE_EMAIL");
-
+  selectedBlood: any;
   bloodgroup: string[] = [
     'A+',
     'A-',
@@ -68,7 +67,6 @@ export class AddpatientinfoComponent {
   keyNotes: any;
   lastPhysicianEmail: any;
   lastConsultationDate: any;
-
   ngOnInit(): void {
     this.patientData = sessionStorage.getItem('arraydata');
     this.ailment = sessionStorage.getItem('ailment');
@@ -77,6 +75,10 @@ export class AddpatientinfoComponent {
     });
     this.appointmentAppointmentsId = sessionStorage.getItem('appId');
     this.phys = sessionStorage.getItem('physicianEmail');
+    this.allergyService.getAllergies().subscribe((data: any) => {
+      this.allergyData = data;
+    });
+    this.getRecentAppointment();
     this.myForm = new FormGroup({
       heightt: new FormControl('', [Validators.required, Validators.max(200), Validators.min(20), Validators.pattern('[0-9]+')]),
       bpSystolic: new FormControl('', [Validators.required, Validators.min(20), Validators.max(140), Validators.pattern('[0-9]+')]),
@@ -89,27 +91,28 @@ export class AddpatientinfoComponent {
       sugar: new FormControl('', [Validators.required, Validators.min(15), Validators.max(300), Validators.pattern('[0-9]+')]),
       somethingData: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9 ]+"), Validators.maxLength(300)]),
     });
-    this.allergyService.getAllergies().subscribe((data: any) => {
-      this.allergyData = data;
-      console.log("Allegry Data");
-      console.log(data);
-    });
-    this.getRecentAppointment()
+
   }
 
   getRecentAppointment() {
     const appointmentHistory = this.appointment.getAppointmentByStatusAndId(this.patientData, 'completed', 0, 20)
     appointmentHistory.subscribe((data) => {
-      this.appointmentsHistory = data;
 
-      for (let i = 0; i < 1; i++) {
-        this.lastConsultationDate = this.appointmentsHistory[i].date;
-        const Vistdetails = this.healthRecord.getVisitDetails(this.appointmentsHistory[i].id);
-        Vistdetails.subscribe((data) => {
-          this.keyNotes = data.keyNotes;
-          this.lastPhysicianEmail = data.physicianEmail;
-          this.bloodgroup = data.bloodGroup;
-        });
+      if (data != null) {
+        this.appointmentsHistory = data;
+        for (let i = 0; i < 1; i++) {
+          this.lastConsultationDate = this.appointmentsHistory[i].date;
+          const Vistdetails = this.healthRecord.getVisitDetails(this.appointmentsHistory[i].id);
+          Vistdetails.subscribe((data) => {
+            this.keyNotes = data.keyNotes;
+            this.lastPhysicianEmail = data.physicianEmail;
+            this.selectedBlood = data.bloodGroup;
+          });
+        }
+      }
+      if (this.appointmentsHistory.length == 0) {
+        this.myForm.value.bloodgroup.required;
+        this.selectedBlood = this.myForm.value.bloodgroup;
       }
     });
   }
@@ -125,13 +128,17 @@ export class AddpatientinfoComponent {
     for (let i = 0; i < this.myForm.value.allergies.length; i++) {
       data = data + this.myForm.value.allergies[i] + ", ";
     }
-    if (this.appointmentsHistory.length == 0)
-      this.bloodgroup = this.myForm.value.bloodgroup;
+    if (this.appointmentsHistory.length == 0) {
+      this.selectedBlood = this.myForm.value.bloodgroup;
+    }
+    console.log("Allegry Data");
     console.log(this.bloodgroup);
     console.log(this.myForm.value);
+    console.log(this.selectedBlood);
+    console.log(data);
     if (this.myForm.valid) {
       this.patientDetails.allergies = data;
-      this.patientDetails.bloodGroup = this.myForm.value.bloodgroup;
+      this.patientDetails.bloodGroup = this.selectedBlood;
       this.patientDetails.nurseEmail = this.nurseEmail;
       this.patientDetails.height = this.myForm.value.heightt;
       this.patientDetails.weight = this.myForm.value.weightt;
